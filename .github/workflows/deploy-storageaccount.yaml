@@ -1,0 +1,65 @@
+# This workflow deploys a Resource Group and Storage Account Table
+# for the Poorman IPAM solution
+
+name: Deploy-Storage-Account
+
+env:
+      RESOURCEGROUPNAME: "[Enter a Resource Group Name]"    # Set this variable for the Resource Group Name where to store the Storage Account
+      SUBSCRIPTIONID: "[Enter your subscriptionid]"  # Set this variable to deploy the above Resource Group in a certain Subscription
+      REGION: "westeurope" # Set this variable to have the Resource Group and Storage Account deployed in a certain location
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow
+  push:
+    branches: [ none ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build-and-deploy"
+  build-and-deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest    
+    
+    outputs:
+      ResourceGroupName: ${{ steps.deploy-storage-account.outputs.ResourceGroupName }}
+      StorageAccountName: ${{ steps.deploy-storage-account.outputs.StorageAccountName }}
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - run: |
+          echo "${{ env.RESOURCEGROUPNAME }}"
+          echo "${{ env.SUBSCRIPTIONID }}"
+          echo "${{ env.REGION }}"
+      - uses: actions/checkout@v2
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      # Deploy Azure Resource Group
+      - name: Azure CLI Action
+        uses: Azure/cli@1.0.4
+        with:
+          # Specify the script here
+          inlineScript: |
+            az group create --name ${{ env.RESOURCEGROUPNAME }} --location ${{ env.REGION }}
+      # Deploy Storage Account
+      - name: Deploy Azure Resource Manager (ARM) Template
+        uses: Azure/arm-deploy@v1
+        id: deploy-storage-account
+        with:
+          scope: resourcegroup
+          subscriptionId: ${{ env.SUBSCRIPTIONID }}
+          region: ${{ env.REGION }}
+          resourceGroupName: ${{ env.RESOURCEGROUPNAME }}
+          template: src/templates/azuredeploy.json          
+          deploymentMode: incremental
+          deploymentName: "poormansipam-storageaccount"
+          parameters: src/templates/azuredeploy.parameters.json
+      # Output Storage Account ResourceGroup Name and Storage Account Name
+      - run: |
+          echo ${{ steps.deploy-storage-account.outputs.ResourceGroupName }}
+          echo ${{ steps.deploy-storage-account.outputs.StorageAccountName }}

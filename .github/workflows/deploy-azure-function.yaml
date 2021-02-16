@@ -1,0 +1,64 @@
+# This workflow deploys a the Poormans IPAM Azure Function
+
+name: Deploy-Azure-Function
+
+env:
+  AZURE_FUNCTIONAPP_NAME: "[enter the name for your Function App]"    # set this to your application's name
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: "./src/function/"  # set this to the path to your web app project, defaults to the repository root
+  RESOURCEGROUPNAME: "[Enter a Resource Group Name]"    # Set this variable for the Resource Group Name where to store the Storage Account
+  SUBSCRIPTIONID: "[Enter a Subscription ID]"  # Set this variable to deploy the above Resource Group in a certain Subscription
+  STORAGEACCOUNTNAME: "[Enter the name of Storage Account from the deploy-storage-account Github Action Workflow output]"
+  REGION: "westeurope" # Set this variable to have the Resource Group and Storage Account deployed in a certain location
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ none ]
+  # pull_request:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  build-and-deploy-azurefunction:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      # Build Azure Function. Copies PowerShell IPAM Module to Azure Function
+      - name: Run PowerShell Bootstrap script
+        run: .\bootstrap.ps1
+        shell: pwsh
+      - name: Copy IPAM PowerShell module to Azure Function
+        run: Invoke-Build -Task CopyModuleFiles -File './poormansipam.build.ps1'
+        shell: pwsh
+      # Login to Azure
+      - uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS}}
+      # Create Function App in Azure
+      - name: Azure CLI Action - Create Function App
+        uses: Azure/cli@1.0.4
+        with:
+          # Specify the script here
+          inlineScript: |
+            az functionapp create --resource-group ${{ env.RESOURCEGROUPNAME }} --consumption-plan-location ${{ env.REGION }} --runtime powershell --functions-version 3 --name $AZURE_FUNCTIONAPP_NAME --storage-account ${{ env.STORAGEACCOUNTNAME }}
+      # Publish Azure Function${{needs.build-and-deploy-storageaccount.outputs.ResourceGroupName}}
+      - name: 'Run Azure Functions Action'
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+      # Configure App Settings
+      - name: 'Configure App Settings'
+        uses: azure/appservice-settings@v1
+        with:
+          app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
+          #slot-name: 'staging'  # Optional and needed only if the settings have to be configured on the specific deployment slot
+          app-settings-json: '${{ secrets.APP_SETTINGS }}'
+        id: settings
