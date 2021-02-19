@@ -1,0 +1,60 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "input": {
+            "value": {
+                "Name": "Subnet-Network-Security-Group",
+                "ResourceId": "/providers/Microsoft.Management/managementGroups/fscp/providers/Microsoft.Authorization/policyDefinitions/Subnet-Network-Security-Group",
+                "ResourceName": "Subnet-Network-Security-Group",
+                "ResourceType": "Microsoft.Authorization/policyDefinitions",
+                "SubscriptionId": null,
+                "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/fscp/providers/Microsoft.Authorization/policyDefinitions/Subnet-Network-Security-Group",
+                "Properties": {
+                    "Description": "This Azure Policy appends a Network Security Group in accordance with the naming convention of the Subnet.",
+                    "DisplayName": "Subnet-Network-Security-Group",
+                    "Mode": "All",
+                    "Parameters": {
+                        "effect": {
+                            "type": "String",
+                            "metadata": {
+                                "displayName": "Allowed Azure Policy Effect",
+                                "description": "The allowed effect for this Azure Policy"
+                            },
+                            "defaultValue": "Append"
+                        }
+                    },
+                    "PolicyRule": {
+                        "if": {
+                            "allOf": [
+                                {
+                                    "field": "type",
+                                    "equals": "Microsoft.Network/virtualNetworks/subnets"
+                                },
+                                {
+                                    "field": "name",
+                                    "contains": "app"
+                                },
+                                {
+                                    "field": "Microsoft.Network/virtualNetworks/subnets/networkSecurityGroup.id",
+                                    "notEquals": "[concat(subscription().id, '/resourceGroups/', resourcegroup().name, '/providers/Microsoft.Network/networkSecurityGroups/', 'app-network-security-group')]"
+                                }
+                            ]
+                        },
+                        "then": {
+                            "effect": "[parameters('effect')]",
+                            "details": [
+                                {
+                                    "field": "Microsoft.Network/virtualNetworks/subnets/networkSecurityGroup",
+                                    "value": {
+                                        "id": "[concat(subscription().id, '/resourceGroups/', resourcegroup().name, '/providers/Microsoft.Network/networkSecurityGroups/', 'app-network-security-group')]"
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

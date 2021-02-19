@@ -1,0 +1,66 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "input": {
+            "value": {
+                "Name": "Subnet-Naming-Convention",
+                "ResourceId": "/providers/Microsoft.Management/managementGroups/fscp/providers/Microsoft.Authorization/policyDefinitions/Subnet-Naming-Convention",
+                "ResourceName": "Subnet-Naming-Convention",
+                "ResourceType": "Microsoft.Authorization/policyDefinitions",
+                "SubscriptionId": null,
+                "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/fscp/providers/Microsoft.Authorization/policyDefinitions/Subnet-Naming-Convention",
+                "Properties": {
+                    "Description": "This Azure Policy enforces a naming convention on Subnets for your network topology.",
+                    "DisplayName": "Subnet-Naming-Convention",
+                    "Mode": "All",
+                    "Parameters": {
+                        "effect": {
+                            "type": "String",
+                            "metadata": {
+                                "displayName": "Allowed Azure Policy Effect",
+                                "description": "The allowed effect for this Azure Policy"
+                            },
+                            "defaultValue": "Deny"
+                        }
+                    },
+                    "PolicyRule": {
+                        "if": {
+                            "anyOf": [
+                                {
+                                    "allOf": [
+                                        {
+                                            "field": "type",
+                                            "equals": "Microsoft.Network/virtualNetworks"
+                                        },
+                                        {
+                                            "field": "Microsoft.Network/virtualNetworks/subnets[*].name",
+                                            "notContains": "app"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "allOf": [
+                                        {
+                                            "field": "type",
+                                            "equals": "Microsoft.Network/virtualNetworks/subnets"
+                                        },
+                                        {
+                                            "not": {
+                                                "field": "name",
+                                                "contains": "app"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        "then": {
+                            "effect": "[parameters('effect')]"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
