@@ -6,7 +6,7 @@
     {
       "label": "CopyModuleFiles",
       "type": "shell",
-      "command": "Invoke-Build -Task CopyModuleFiles -File './AIPAS.build.ps1'",
+      "command": "Invoke-Build -Task CopyModuleFiles -File './aipas.build.ps1'",
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": false,
@@ -16,7 +16,7 @@
     {
       "label": "Test",
       "type": "shell",
-      "command": "Invoke-Build -Task Test -File './AIPAS.build.ps1'",
+      "command": "Invoke-Build -Task Test -File './aipas.build.ps1'",
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": false,
@@ -26,7 +26,7 @@
     {
       "label": "Startfunction",
       "type": "shell",
-      "command": "Invoke-Build -Task Startfunction -File './AIPAS.build.ps1'",
+      "command": "Invoke-Build -Task Startfunction -File './aipas.build.ps1'",
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": false,
@@ -36,7 +36,7 @@
     {
       "label": "Clean",
       "type": "shell",
-      "command": "Invoke-Build -Task Clean -File './AIPAS.build.ps1'",
+      "command": "Invoke-Build -Task Clean -File './aipas.build.ps1'",
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": false,
@@ -46,7 +46,7 @@
     {
       "label": "Testfunction",
       "type": "shell",
-      "command": "Invoke-Build -Task TestFunction -File './AIPAS.build.ps1'",
+      "command": "Invoke-Build -Task TestFunction -File './aipas.build.ps1'",
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": false,
@@ -56,7 +56,7 @@
     {
       "label": ".",
       "type": "shell",
-      "command": "Invoke-Build -Task . -File './AIPAS.build.ps1'",
+      "command": "Invoke-Build -Task . -File './aipas.build.ps1'",
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": false,
@@ -70,7 +70,7 @@
     {
       "label": "?",
       "type": "shell",
-      "command": "Invoke-Build -Task ? -File './AIPAS.build.ps1'",
+      "command": "Invoke-Build -Task ? -File './aipas.build.ps1'",
       "problemMatcher": "$msCompile",
       "presentation": {
         "echo": false,

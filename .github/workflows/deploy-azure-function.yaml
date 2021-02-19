@@ -34,7 +34,7 @@ jobs:
         run: .\bootstrap.ps1
         shell: pwsh
       - name: Copy IPAM PowerShell module to Azure Function
-        run: Invoke-Build -Task CopyModuleFiles -File './AIPAS.build.ps1'
+        run: Invoke-Build -Task CopyModuleFiles -File './aipas.build.ps1'
         shell: pwsh
       # Login to Azure
       - uses: azure/login@v1

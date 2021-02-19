@@ -1,12 +1,12 @@
-# AIPAS IPAM
+# AIPAS
 
-AIPAS IPAM is IP Adddress Management Solution built in Azure to let (Network) Administrators keep up-to-date records of IP assignments and available addresses used to configure Azure Virtual Networks (VNets). 
+AIPAS is IP Adddress Management Solution built in Azure to let (Network) Administrators keep up-to-date records of IP assignments and available addresses used to configure Azure Virtual Networks (VNets). 
 
 It was developed to be used to support the deployment of Enterprise Scale [Landing Zones](https://stefanstranger.github.io/2020/10/16/EnterpriseScaleSubscriptionDemocratization/#what-is-a-landing-zone) and their accompanied Virtual Networks.
 
-- [AIPAS IPAM](#AIPAS-ipam)
+- [AIPAS](#aipas)
   - [Architectural Overview](#architectural-overview)
-  - [AIPAS IPAM REST API reference](#AIPAS-ipam-rest-api-reference)
+  - [AIPAS REST API reference](#aipas-rest-api-reference)
     - [Add Address Space](#add-address-space)
       - [Examples](#examples)
     - [Register Address Space](#register-address-space)
@@ -15,7 +15,7 @@ It was developed to be used to support the deployment of Enterprise Scale [Landi
   - [Requirements](#requirements)
   - [Local development](#local-development)
     - [Install local development prerequisites](#install-local-development-prerequisites)
-    - [Clone AIPAS IPAM Repository](#clone-AIPAS-ipam-repository)
+    - [Clone AIPAS Repository](#clone-aipas-repository)
     - [Install PowerShell Modules](#install-powershell-modules)
     - [Deploy Azure Storage Table](#deploy-azure-storage-table)
     - [Create Service Principal](#create-service-principal)
@@ -38,14 +38,14 @@ It was developed to be used to support the deployment of Enterprise Scale [Landi
 
 ![Architectural Overview](pictures/ArchitecturalOverview.png)
 
-## AIPAS IPAM REST API reference
+## AIPAS REST API reference
 
 ### Add Address Space
 
 | AddAddressSpace |
 |----------|
 | HTTPS |
-| POST https://AIPAS.azurewebsites.net/api/AddAddressSpace?code=[code] |
+| POST https://aipas.azurewebsites.net/api/AddAddressSpace?code=[code] |
 
 #### Examples
 
@@ -54,7 +54,7 @@ Sample Request
 | AddAddressSpace |
 |----------|
 | HTTPS |
-| POST https://AIPAS.azurewebsites.net/api/AddAddressSpace?code=[code] |
+| POST https://aipas.azurewebsites.net/api/AddAddressSpace?code=[code] |
 
 Request Body
 
@@ -86,7 +86,7 @@ Address Space 10.0.0.0/16 already added
 | RegisterAddressSpace |
 |----------|
 | HTTPS |
-| POST https://AIPAS.azurewebsites.net/api/RegisterAddressSpace?code=[code] |
+| POST https://aipas.azurewebsites.net/api/RegisterAddressSpace?code=[code] |
 
 #### Examples
 
@@ -95,7 +95,7 @@ Sample Request
 | RegisterAddressSpace |
 |----------|
 | HTTPS |
-| POST https://AIPAS.azurewebsites.net/api/RegisterAddressSpace?code=[code] |
+| POST https://aipas.azurewebsites.net/api/RegisterAddressSpace?code=[code] |
 
 Request Body
 
@@ -135,7 +135,7 @@ Azure Subscription with:
 
 ## Local development
 
-If you want to further develop or test the AIPAS IPAM Solutions you need to install the following prerequisites on your Windows development machine.
+If you want to further develop or test AIPAS you need to install the following prerequisites on your Windows development machine.
 
 ### Install local development prerequisites
 
@@ -160,7 +160,7 @@ choco install pwsh
 choco install httpmaster-express
 ```
 
-### Clone AIPAS IPAM Repository
+### Clone AIPAS Repository
 
 ```PowerShell
 git clone https://github.com/stefanstranger/AIPAS.git
@@ -179,7 +179,7 @@ The following PowerShell Modules need to be installed:
 - PlatyPS
 - Az PowerShell modules*
 
-\* The installation of the Az PowerShell modules are not part of the bootstrap.ps1 script. If you have not installed these PowerShell modules run Install-Module -Name Az.
+\* The installation of the Az PowerShell modules are not part of the bootstrap.ps1 script. If you have not installed these PowerShell modules run Install-Module -Name Az on your development machine.
 
 
 
@@ -286,6 +286,7 @@ Get-AzADServicePrincipal -ServicePrincipalName $($app.ApplicationId.Guid) -OutVa
 [Environment]::SetEnvironmentVariable("AIPASClientSecret", "$PlainPassword", "User")
 [Environment]::SetEnvironmentVariable("AIPASSubscriptionId", "$($subscription.subscriptionId)", "User")
 [Environment]::SetEnvironmentVariable("AIPAStenantId", "$($subscription.TenantID)", "User")
+[Environment]::SetEnvironmentVariable("AIPASResourceGroupName", $ResourceGroupName, "User")
 [Environment]::SetEnvironmentVariable("AIPASStorageAccountName", $StorageAccountName, "User")
 # Restart VSCode to have access to the environment variables
 #endregion
@@ -393,7 +394,7 @@ Paste the entire JSON object produced by the `az ad sp create-for-rbac` command 
 
 ### Deploy Storage Account
 
-After configuring the AZURE_CREDENTIALS it's time to deploy the Storage Account. You can use the Github Workflow called [Deploy-Storage-Account](https://github.com/stefanstranger/AIPAS/blob/main/.github/workflows/deploy-storageaccount.yaml).
+After configuring the AZURE_CREDENTIALS it's time to deploy the Storage Account. You can use the Github Workflow called [Deploy-Storage-Account](https://github.com/stefanstranger/AIPAS/blob/master/.github/workflows/deploy-storageaccount.yaml).
 
 You need to update the following values in the deploy-storage-account yaml file.
 
