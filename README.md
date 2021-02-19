@@ -485,13 +485,13 @@ env:
 
 ![Deploy Azure Function with Github Workflow](pictures/deploy-Azure-Function-github-workflow.png)
 
-The following resources should not have been deployed.
+The following resources should have been deployed.
 
 ![Overview of all resources deployed](pictures/azure-portal-overview.png)
 
 ### Test Functions
 
-You can use the Azure Portal for testing your Azure Functions. If everything is correctly configured and deployed you can now use your AIPAS IPAM solution.
+You can use the Azure Portal for testing your Azure Functions. If everything is correctly configured and deployed you can now use your AIPAS solution.
 
 ![Testing AddAddressSpace Azure Function](pictures/AddAddressSpaceAzureFunction.png)
 
@@ -545,8 +545,6 @@ New-AzVirtualNetwork -Name $VNetName -ResourceGroupName $ResourceGroupName -Loca
 #endregion
 ```
 
-
-
 ## TODO
 
 - Add authentication and authorization to the Azure Function
@@ -556,10 +554,9 @@ New-AzVirtualNetwork -Name $VNetName -ResourceGroupName $ResourceGroupName -Loca
 
 Please use this GitHub Repos [issue](https://github.com/stefanstranger/AIPAS/issues) tracking capability to raise issues or feature requests.
 
-
-
-
 ## References
+
+- [Blog post - IP Address Management in Enterprise Scale Landing Zones](https://stefanstranger.github.io/2021/01/30/IPAddressManagementInESLZ/)
 
 - [Blog post - Enterprise-Scale - Subscription Democratization](https://stefanstranger.github.io/2020/10/16/EnterpriseScaleSubscriptionDemocratization)
 
