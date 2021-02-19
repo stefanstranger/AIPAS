@@ -123,7 +123,7 @@ Failed to register free address space
 
 ### Update Address Space
 
-The UpdateAddressSpace Azure Function is a timer function which is scheduled to run every day at 9:30 AM. If you want to change the schedule please change the function.json schedule configuration.
+The UpdateAddressSpace Azure Function is a timer function which is scheduled to run every day at 9:30 AM. If you want to change the schedule please change the [function.json](https://github.com/stefanstranger/AIPAS/blob/master/src/function/UpdateAddressSpaceTimer/function.json) schedule configuration.
 
 ## Requirements
 
@@ -190,7 +190,7 @@ Within the Git Repository there are Azure Resource Manager Template files that c
 Run the following PowerShell Azure commands:
 
 ```PowerShell
-#<
+<#
     Run from within your cloned repo folder
 #>
 
