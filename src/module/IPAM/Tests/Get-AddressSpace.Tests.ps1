@@ -12,14 +12,14 @@ Describe 'Passes Get-AddressSpace Function' {
     It -name 'Passes Get-AddressSpace Function' {
 
         $params = @{
-            'StorageAccountName' = $env:PoormansStorageAccountName
+            'StorageAccountName' = $env:AIPASStorageAccountName
             'StorageTableName'   = 'ipam'
-            'TenantId'           = $env:PoormansTenantId
-            'SubscriptionId'     = $env:PoormansSubscriptionId
-            'ResourceGroupName'  = 'poormansipam-rg'
+            'TenantId'           = $env:AIPASTenantId
+            'SubscriptionId'     = $env:AIPASSubscriptionId
+            'ResourceGroupName'  = 'AIPAS-rg'
             'PartitionKey'       = 'IPAM'
-            'ClientId'           = $env:PoormansClientId
-            'ClientSecret'       = $env:PoormansClientSecret
+            'ClientId'           = $env:AIPASClientId
+            'ClientSecret'       = $env:AIPASClientSecret
         }
         
         Get-AddressSpace @params | Should -Not -BeNullOrEmpty

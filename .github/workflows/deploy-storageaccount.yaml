@@ -57,7 +57,7 @@ jobs:
           resourceGroupName: ${{ env.RESOURCEGROUPNAME }}
           template: src/templates/azuredeploy.json          
           deploymentMode: incremental
-          deploymentName: "poormansipam-storageaccount"
+          deploymentName: "AIPAS-storageaccount"
           parameters: src/templates/azuredeploy.parameters.json
       # Output Storage Account ResourceGroup Name and Storage Account Name
       - run: |

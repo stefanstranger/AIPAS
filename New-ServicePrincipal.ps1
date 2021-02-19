@@ -3,9 +3,9 @@
 #>
 
 #region variables
-$ResourceGroupName = "poormansipam-rg" #used to scope the permissions for the SPN
+$ResourceGroupName = "AIPAS-rg" #used to scope the permissions for the SPN
 $RoleDefinitionName = "Storage Account Contributor"
-$ADApplicationName = "poormansipamdemo"
+$ADApplicationName = "AIPASdemo"
 $PlainPassword = '[enter password]'
 $StorageAccountName = "[Enter Storage Account Name]"
 #endregion
@@ -26,7 +26,7 @@ Set-AzContext -SubscriptionId $subscription.subscriptionId -TenantId $subscripti
 
 #region create SPN with Password
 $Password = ConvertTo-SecureString $PlainPassword  -AsPlainText -Force
-New-AzADApplication -DisplayName $ADApplicationName -HomePage "https://www.poormansipam.io" -IdentifierUris "https://www.poormansipam.demo" -Password $Password -OutVariable app
+New-AzADApplication -DisplayName $ADApplicationName -HomePage "https://www.AIPAS.io" -IdentifierUris "https://www.AIPAS.demo" -Password $Password -OutVariable app
 $Scope = Get-AzResourceGroup -Name $ResourceGroupName
 New-AzADServicePrincipal -ApplicationId $($app.ApplicationId) -Role $RoleDefinitionName -Scope $($Scope.ResourceId)
 # Add read permissions on all Subscriptions!!! For retrieving VNet information using the Resource Graph...
@@ -46,11 +46,11 @@ Get-AzADServicePrincipal -ObjectId $($app.ApplicationId.Guid) -OutVariable SPN
 #endregion
 
 #region create local environment variabled
-[Environment]::SetEnvironmentVariable("PoormansClientId", "$($app.ApplicationId)", "User")
-[Environment]::SetEnvironmentVariable("PoormansClientSecret", "$PlainPassword", "User")
-[Environment]::SetEnvironmentVariable("PoormansSubscriptionId", "$($subscription.subscriptionId)", "User")
-[Environment]::SetEnvironmentVariable("PoormanstenantId", "$($subscription.TenantID)", "User")
-[Environment]::SetEnvironmentVariable("PoormansStorageAccountName", $StorageAccountName, "User")
+[Environment]::SetEnvironmentVariable("AIPASClientId", "$($app.ApplicationId)", "User")
+[Environment]::SetEnvironmentVariable("AIPASClientSecret", "$PlainPassword", "User")
+[Environment]::SetEnvironmentVariable("AIPASSubscriptionId", "$($subscription.subscriptionId)", "User")
+[Environment]::SetEnvironmentVariable("AIPAStenantId", "$($subscription.TenantID)", "User")
+[Environment]::SetEnvironmentVariable("AIPASStorageAccountName", $StorageAccountName, "User")
 
 # Restart VSCode to have access to the environment variables
 #endregion
@@ -61,23 +61,23 @@ Get-AzADServicePrincipal -ObjectId $($app.ApplicationId.Guid) -OutVariable SPN
 #region output info. Use in APP Settings Github Secret
 @(
     [ordered]@{
-        "name" = "PoormansClientId"
+        "name" = "AIPASClientId"
         "value" = "$($app.ApplicationId)"
     },
     [ordered]@{
-        "name" = "PoormansClientSecret"
+        "name" = "AIPASClientSecret"
         "value" = "$PlainPassword"
     },
     [ordered]@{
-        "name" = "PoormansTenantId"
+        "name" = "AIPASTenantId"
         "value" = "$($subscription.TenantID)"
     },
     [ordered]@{
-        "name" = "PoormansSubscriptionId"
+        "name" = "AIPASSubscriptionId"
         "value" = "$($subscription.subscriptionId)"
     },
     [ordered]@{
-        "name" = "PoormansStorageAccountName"
+        "name" = "AIPASStorageAccountName"
         "value" = $StorageAccountName
     },
     [ordered]@{

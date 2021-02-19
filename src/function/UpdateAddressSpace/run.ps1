@@ -8,14 +8,14 @@ Write-Host "PowerShell HTTP trigger function UpdateAddressSpace processed a requ
 
 try {
     $params = @{
-        'StorageAccountName' = $env:PoormansStorageAccountName
+        'StorageAccountName' = $env:AIPASStorageAccountName
         'StorageTableName'   = 'ipam'
-        'TenantId'           = $env:PoormansTenantId
-        'SubscriptionId'     = $env:PoormansSubscriptionId
-        'ResourceGroupName'  = 'poormansipam-rg'
+        'TenantId'           = $env:AIPASTenantId
+        'SubscriptionId'     = $env:AIPASSubscriptionId
+        'ResourceGroupName'  = 'AIPAS-rg'
         'PartitionKey'       = 'ipam'
-        'ClientId'           = $env:PoormansClientId
-        'ClientSecret'       = $env:PoormansClientSecret
+        'ClientId'           = $env:AIPASClientId
+        'ClientSecret'       = $env:AIPASClientSecret
     }
 
     $Body = Update-AddressSpace @params -ErrorAction Stop

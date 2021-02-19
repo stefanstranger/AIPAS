@@ -11,14 +11,14 @@ BeforeAll {
 Describe 'Passes Update-AddressSpace Function' {
     It -name 'Passes Update-AddressSpace Function' {
         $params = @{
-            'StorageAccountName' = $env:PoormansStorageAccountName
+            'StorageAccountName' = $env:AIPASStorageAccountName
             'StorageTableName' = 'ipam'
-            'TenantId' = $env:PoormansTenantId
-            'SubscriptionId' = $env:PoormansSubscriptionId
-            'ResourceGroupName' = 'poormansipam-rg'
+            'TenantId' = $env:AIPASTenantId
+            'SubscriptionId' = $env:AIPASSubscriptionId
+            'ResourceGroupName' = 'AIPAS-rg'
             'PartitionKey' = 'IPAM'
-            'ClientId' = $env:PoormansClientId
-            'ClientSecret' = $env:PoormansClientSecret
+            'ClientId' = $env:AIPASClientId
+            'ClientSecret' = $env:AIPASClientSecret
         }
         $Result = Update-AddressSpace @params 
         $Result.Status | Should -Be 'OK'

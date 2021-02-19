@@ -1,5 +1,5 @@
 <#
-Build script to be used with all build tasks for the Poormans IPAM Solution
+Build script to be used with all build tasks for the AIPAS IPAM Solution
 
 .Synopsis
     Build script (https://github.com/nightroman/Invoke-Build)

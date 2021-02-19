@@ -21,7 +21,7 @@
     Copyright         = '(c) 2020 Stefan Stranger. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description       = 'PowerShell module to support Poormans IPAM Solution'
+    Description       = 'PowerShell module to support AIPAS IPAM Solution'
 
     # Private data available to the module
     PrivateData       = @{
@@ -38,10 +38,10 @@
             Tags = @('Azure')
 
             # A URL to the license for this module.
-            LicenseUri = 'https://github.com/stefanstranger/poormansipam/blob/main/LICENSE'
+            LicenseUri = 'https://github.com/stefanstranger/AIPAS/blob/main/LICENSE'
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/stefanstranger/poormansipam'
+            ProjectUri = 'https://github.com/stefanstranger/AIPAS'
 
             # A URL to an icon representing this module.
             # IconUri = ''

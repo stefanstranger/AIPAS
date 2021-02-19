@@ -1,5 +1,5 @@
 #####################################################################################
-# Public Function for Poormans IPAM PowerShell module
+# Public Function for AIPAS IPAM PowerShell module
 # Description: 
 # Retrieves all deployed Vnets and validates these against the Address Spaces used in the Storage Tabel
 # Azure Virtual Network deployment
@@ -63,7 +63,7 @@ Function Update-AddressSpace {
         }
 
         $SubscriptionIds = ((Invoke-RestMethod @params).value).SubscriptionId
-        Write-Verbose -Message ('The Poormans IPAM SPN has access to the following Subscription(s): {0}' -f ($SubscriptionIds | out-string))
+        Write-Verbose -Message ('The AIPAS IPAM SPN has access to the following Subscription(s): {0}' -f ($SubscriptionIds | out-string))
 
         $VNets = @()
         Foreach($SubscriptionId in $SubscriptionIds) {

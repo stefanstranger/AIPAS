@@ -1,12 +1,12 @@
-# Poormans IPAM
+# AIPAS IPAM
 
-Poormans IPAM is IP Adddress Management Solution built in Azure to let (Network) Administrators keep up-to-date records of IP assignments and available addresses used to configure Azure Virtual Networks (VNets). 
+AIPAS IPAM is IP Adddress Management Solution built in Azure to let (Network) Administrators keep up-to-date records of IP assignments and available addresses used to configure Azure Virtual Networks (VNets). 
 
 It was developed to be used to support the deployment of Enterprise Scale [Landing Zones](https://stefanstranger.github.io/2020/10/16/EnterpriseScaleSubscriptionDemocratization/#what-is-a-landing-zone) and their accompanied Virtual Networks.
 
-- [Poormans IPAM](#poormans-ipam)
+- [AIPAS IPAM](#AIPAS-ipam)
   - [Architectural Overview](#architectural-overview)
-  - [Poormans IPAM REST API reference](#poormans-ipam-rest-api-reference)
+  - [AIPAS IPAM REST API reference](#AIPAS-ipam-rest-api-reference)
     - [Add Address Space](#add-address-space)
       - [Examples](#examples)
     - [Register Address Space](#register-address-space)
@@ -15,7 +15,7 @@ It was developed to be used to support the deployment of Enterprise Scale [Landi
   - [Requirements](#requirements)
   - [Local development](#local-development)
     - [Install local development prerequisites](#install-local-development-prerequisites)
-    - [Clone Poormans IPAM Repository](#clone-poormans-ipam-repository)
+    - [Clone AIPAS IPAM Repository](#clone-AIPAS-ipam-repository)
     - [Install PowerShell Modules](#install-powershell-modules)
     - [Deploy Azure Storage Table](#deploy-azure-storage-table)
     - [Create Service Principal](#create-service-principal)
@@ -38,14 +38,14 @@ It was developed to be used to support the deployment of Enterprise Scale [Landi
 
 ![Architectural Overview](pictures/ArchitecturalOverview.png)
 
-## Poormans IPAM REST API reference
+## AIPAS IPAM REST API reference
 
 ### Add Address Space
 
 | AddAddressSpace |
 |----------|
 | HTTPS |
-| POST https://poormansipam.azurewebsites.net/api/AddAddressSpace?code=[code] |
+| POST https://AIPAS.azurewebsites.net/api/AddAddressSpace?code=[code] |
 
 #### Examples
 
@@ -54,7 +54,7 @@ Sample Request
 | AddAddressSpace |
 |----------|
 | HTTPS |
-| POST https://poormansipam.azurewebsites.net/api/AddAddressSpace?code=[code] |
+| POST https://AIPAS.azurewebsites.net/api/AddAddressSpace?code=[code] |
 
 Request Body
 
@@ -86,7 +86,7 @@ Address Space 10.0.0.0/16 already added
 | RegisterAddressSpace |
 |----------|
 | HTTPS |
-| POST https://poormansipam.azurewebsites.net/api/RegisterAddressSpace?code=[code] |
+| POST https://AIPAS.azurewebsites.net/api/RegisterAddressSpace?code=[code] |
 
 #### Examples
 
@@ -95,7 +95,7 @@ Sample Request
 | RegisterAddressSpace |
 |----------|
 | HTTPS |
-| POST https://poormansipam.azurewebsites.net/api/RegisterAddressSpace?code=[code] |
+| POST https://AIPAS.azurewebsites.net/api/RegisterAddressSpace?code=[code] |
 
 Request Body
 
@@ -135,7 +135,7 @@ Azure Subscription with:
 
 ## Local development
 
-If you want to further develop or test the Poormans IPAM Solutions you need to install the following prerequisites on your Windows development machine.
+If you want to further develop or test the AIPAS IPAM Solutions you need to install the following prerequisites on your Windows development machine.
 
 ### Install local development prerequisites
 
@@ -160,10 +160,10 @@ choco install pwsh
 choco install httpmaster-express
 ```
 
-### Clone Poormans IPAM Repository
+### Clone AIPAS IPAM Repository
 
 ```PowerShell
-git clone https://github.com/stefanstranger/poormansipam.git
+git clone https://github.com/stefanstranger/AIPAS.git
 ```
 
 ### Install PowerShell Modules
@@ -205,16 +205,16 @@ Set-AzContext -SubscriptionId $subscription.subscriptionId -TenantId $subscripti
 #endregion
 
 #region Create a new Resource Group
-New-AzResourceGroup -Name 'poormansipam-rg' -Location 'westeurope'
+New-AzResourceGroup -Name 'AIPAS-rg' -Location 'westeurope'
 #endregion
 
 #region Deploy Azure Storage Table in Resource Group
 $params = @{
-    'ResourceGroupName' = 'poormansipam-rg'
+    'ResourceGroupName' = 'AIPAS-rg'
     'Mode' = 'Incremental'
-    'Name' = 'Poormans_IPAM_Deployment'
-    'TemplateFile' = '.\poormansipam\src\templates\azuredeploy.json'
-    'TemplateParameterFile' = '.\poormansipam\src\templates\azuredeploy.parameters.json'
+    'Name' = 'AIPAS_IPAM_Deployment'
+    'TemplateFile' = '.\AIPAS\src\templates\azuredeploy.json'
+    'TemplateParameterFile' = '.\AIPAS\src\templates\azuredeploy.parameters.json'
 }
 
 New-AzResourceGroupDeployment @params
@@ -240,9 +240,9 @@ Use the following command to create the Service Principal and store Service Prin
 #>
 
 #region variables
-$ResourceGroupName = "poormansipam-rg" #used to scope the permissions for the SPN
+$ResourceGroupName = "AIPAS-rg" #used to scope the permissions for the SPN
 $RoleDefinitionName = "Storage Account Contributor"
-$ADApplicationName = "poormansipam"
+$ADApplicationName = "AIPAS"
 $PlainPassword = ""
 $StorageAccountName = ""
 
@@ -262,7 +262,7 @@ Set-AzContext -SubscriptionId $subscription.subscriptionId -TenantId $subscripti
 
 #region create SPN with Password
 $Password = ConvertTo-SecureString $PlainPassword  -AsPlainText -Force
-New-AzADApplication -DisplayName $ADApplicationName -HomePage "https://www.poormansipam.test" -IdentifierUris "https://www.poormansipam.test" -Password $Password -OutVariable app
+New-AzADApplication -DisplayName $ADApplicationName -HomePage "https://www.AIPAS.test" -IdentifierUris "https://www.AIPAS.test" -Password $Password -OutVariable app
 $Scope = Get-AzResourceGroup -Name $ResourceGroupName
 New-AzADServicePrincipal -ApplicationId $($app.ApplicationId) -Role $RoleDefinitionName -Scope $($Scope.ResourceId)
 # Add read permissions on all Subscriptions!!! For retrieving VNet information using the Resource Graph...
@@ -282,11 +282,11 @@ Get-AzADServicePrincipal -ServicePrincipalName $($app.ApplicationId.Guid) -OutVa
 #endregion
 
 #region create local environment variables
-[Environment]::SetEnvironmentVariable("PoormansClientId", "$($app.ApplicationId)", "User")
-[Environment]::SetEnvironmentVariable("PoormansClientSecret", "$PlainPassword", "User")
-[Environment]::SetEnvironmentVariable("PoormansSubscriptionId", "$($subscription.subscriptionId)", "User")
-[Environment]::SetEnvironmentVariable("PoormanstenantId", "$($subscription.TenantID)", "User")
-[Environment]::SetEnvironmentVariable("PoormansStorageAccountName", $StorageAccountName, "User")
+[Environment]::SetEnvironmentVariable("AIPASClientId", "$($app.ApplicationId)", "User")
+[Environment]::SetEnvironmentVariable("AIPASClientSecret", "$PlainPassword", "User")
+[Environment]::SetEnvironmentVariable("AIPASSubscriptionId", "$($subscription.subscriptionId)", "User")
+[Environment]::SetEnvironmentVariable("AIPAStenantId", "$($subscription.TenantID)", "User")
+[Environment]::SetEnvironmentVariable("AIPASStorageAccountName", $StorageAccountName, "User")
 # Restart VSCode to have access to the environment variables
 #endregion
 ```
@@ -301,7 +301,7 @@ During local development these values need to be stored as environment variables
 
 You should now have installed a Resource Group containing a Storage Account and and Service Principal with Storage Account Contributor on the Storage Account and reader permission on the Subscription where the Virtual Network(s) will be deployed e.g. Landing Zone Subscription(s).
 
-The Github Repository contains [Visual Studio Code Tasks](https://github.com/stefanstranger/poormansipam/blob/main/.vscode/tasks.json) that can help during the development. 
+The Github Repository contains [Visual Studio Code Tasks](https://github.com/stefanstranger/AIPAS/blob/main/.vscode/tasks.json) that can help during the development. 
 
 ![VSCode Tasks screenshot](pictures/vscode_tasks.png)
 
@@ -311,7 +311,7 @@ You should see the following Azure Functions being started.
 
 ![Azure Functions started for local development](pictures/Local_development.png)
 
-You can now use a tool like [HttpMaster](https://www.httpmaster.net) to locally test the Poormans IPAM Solution.
+You can now use a tool like [HttpMaster](https://www.httpmaster.net) to locally test the AIPAS IPAM Solution.
 
 You first need to add some address spaces to the Storage Account Table calling the **AddAddressSpace** REST API endpoint with the required body.
 
@@ -393,7 +393,7 @@ Paste the entire JSON object produced by the `az ad sp create-for-rbac` command 
 
 ### Deploy Storage Account
 
-After configuring the AZURE_CREDENTIALS it's time to deploy the Storage Account. You can use the Github Workflow called [Deploy-Storage-Account](https://github.com/stefanstranger/poormansipam/blob/main/.github/workflows/deploy-storageaccount.yaml).
+After configuring the AZURE_CREDENTIALS it's time to deploy the Storage Account. You can use the Github Workflow called [Deploy-Storage-Account](https://github.com/stefanstranger/AIPAS/blob/main/.github/workflows/deploy-storageaccount.yaml).
 
 You need to update the following values in the deploy-storage-account yaml file.
 
@@ -419,23 +419,23 @@ Create a JSON file with the following information and store the output of last r
 ```json
 [
   {
-    "name": "PoormansClientId",
+    "name": "AIPASClientId",
     "value": "[CLientID of SPN used during local development]"
   },
   {
-    "name": "PoormansClientSecret",
+    "name": "AIPASClientSecret",
     "value": "[ClientSecret (password) of SPN used during local development]"
   },
   {
-    "name": "PoormansTenantId",
+    "name": "AIPASTenantId",
     "value": "[TenantId of SPN used during local development]"
   },
   {
-    "name": "PoormansSubscriptionId",
+    "name": "AIPASSubscriptionId",
     "value": "SubscriptionId of SPN used during local development]"
   },
   {
-    "name": "PoormansStorageAccountName",
+    "name": "AIPASStorageAccountName",
     "value": "[Storage Account Name from output of Storage Acount deployment]"
   },
   {
@@ -466,7 +466,7 @@ If you have not configured yet the Storage Account Contributor permissions on th
 
 ### Deploy Azure Function
 
-The last step is the deployment of the Azure Function which also can be done using the a Github Workflow called ["Deploy-Azure-Function"](https://github.com/stefanstranger/poormansipam/blob/main/.github/workflows/deploy-azure-function.yaml).
+The last step is the deployment of the Azure Function which also can be done using the a Github Workflow called ["Deploy-Azure-Function"](https://github.com/stefanstranger/AIPAS/blob/main/.github/workflows/deploy-azure-function.yaml).
 
 Update the Github Action Workflow environment variables for your environment and start the Github Action Workflow.
 
@@ -490,7 +490,7 @@ The following resources should not have been deployed.
 
 ### Test Functions
 
-You can use the Azure Portal for testing your Azure Functions. If everything is correctly configured and deployed you can now use your Poormans IPAM solution.
+You can use the Azure Portal for testing your Azure Functions. If everything is correctly configured and deployed you can now use your AIPAS IPAM solution.
 
 ![Testing AddAddressSpace Azure Function](pictures/AddAddressSpaceAzureFunction.png)
 
@@ -553,7 +553,7 @@ New-AzVirtualNetwork -Name $VNetName -ResourceGroupName $ResourceGroupName -Loca
 
 ## Need Help?
 
-Please use this GitHub Repos [issue](https://github.com/stefanstranger/poormansipam/issues) tracking capability to raise issues or feature requests.
+Please use this GitHub Repos [issue](https://github.com/stefanstranger/AIPAS/issues) tracking capability to raise issues or feature requests.
 
 
 

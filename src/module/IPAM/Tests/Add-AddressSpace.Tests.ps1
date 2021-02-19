@@ -13,14 +13,14 @@ Describe 'Passes Add-AddressSpace Function' {
     It -name 'Passes Add-AddressSpace Function' {
 
         $params = @{
-            'StorageAccountName' = $env:PoormansStorageAccountName
+            'StorageAccountName' = $env:AIPASStorageAccountName
             'StorageTableName'   = 'ipam'
-            'TenantId'           = $env:PoormansTenantId
-            'SubscriptionId'     = $env:PoormansSubscriptionId
-            'ResourceGroupName'  = 'poormansipam-rg'
+            'TenantId'           = $env:AIPASTenantId
+            'SubscriptionId'     = $env:AIPASSubscriptionId
+            'ResourceGroupName'  = 'AIPAS-rg'
             'PartitionKey'       = 'IPAM'
-            'ClientId'           = $env:PoormansClientId
-            'ClientSecret'       = $env:PoormansClientSecret
+            'ClientId'           = $env:AIPASClientId
+            'ClientSecret'       = $env:AIPASClientSecret
             'NetworkAddress'     = "10.0.0.0/16", "10.1.0.0/16"
         }
         $Result = Add-AddressSpace @params 

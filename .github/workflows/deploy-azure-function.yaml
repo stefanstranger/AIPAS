@@ -1,4 +1,4 @@
-# This workflow deploys a the Poormans IPAM Azure Function
+# This workflow deploys a the AIPAS IPAM Azure Function
 
 name: Deploy-Azure-Function
 
@@ -34,7 +34,7 @@ jobs:
         run: .\bootstrap.ps1
         shell: pwsh
       - name: Copy IPAM PowerShell module to Azure Function
-        run: Invoke-Build -Task CopyModuleFiles -File './poormansipam.build.ps1'
+        run: Invoke-Build -Task CopyModuleFiles -File './AIPAS.build.ps1'
         shell: pwsh
       # Login to Azure
       - uses: azure/login@v1

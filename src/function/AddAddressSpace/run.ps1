@@ -21,14 +21,14 @@ if ($NetworkAddress) {
     
     try {
         $params = @{
-            'StorageAccountName' = $env:PoormansStorageAccountName
+            'StorageAccountName' = $env:AIPASStorageAccountName
             'StorageTableName'   = 'ipam'
-            'TenantId'           = $env:PoormansTenantId
-            'SubscriptionId'     = $env:PoormansSubscriptionId
-            'ResourceGroupName'  = 'poormansipam-rg'
+            'TenantId'           = $env:AIPASTenantId
+            'SubscriptionId'     = $env:AIPASSubscriptionId
+            'ResourceGroupName'  = 'AIPAS-rg'
             'PartitionKey'       = 'IPAM'
-            'ClientId'           = $env:PoormansClientId
-            'ClientSecret'       = $env:PoormansClientSecret
+            'ClientId'           = $env:AIPASClientId
+            'ClientSecret'       = $env:AIPASClientSecret
             'NetworkAddress'     = $NetworkAddress
         }
 

@@ -1,5 +1,5 @@
 #####################################################################################
-# Public Function for Poormans IPAM PowerShell module
+# Public Function for AIPAS IPAM PowerShell module
 # Description: 
 # Adds new address space to Storage Table which can be used as Address Space for the
 # Azure Virtual Network deployment
