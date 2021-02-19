@@ -190,6 +190,10 @@ Within the Git Repository there are Azure Resource Manager Template files that c
 Run the following PowerShell Azure commands:
 
 ```PowerShell
+#<
+    Run from within your cloned repo folder
+#>
+
 #region Login to Azure
 Add-AzAccount
 #endregion
@@ -213,8 +217,8 @@ $params = @{
     'ResourceGroupName' = 'AIPAS-rg'
     'Mode' = 'Incremental'
     'Name' = 'AIPAS_IPAM_Deployment'
-    'TemplateFile' = '.\AIPAS\src\templates\azuredeploy.json'
-    'TemplateParameterFile' = '.\AIPAS\src\templates\azuredeploy.parameters.json'
+    'TemplateFile' = '.\src\templates\azuredeploy.json'
+    'TemplateParameterFile' = '.\src\templates\azuredeploy.parameters.json'
 }
 
 New-AzResourceGroupDeployment @params
@@ -243,8 +247,9 @@ Use the following command to create the Service Principal and store Service Prin
 $ResourceGroupName = "AIPAS-rg" #used to scope the permissions for the SPN. This is where the Storage Account is being deployed.
 $RoleDefinitionName = "Storage Account Contributor"
 $ADApplicationName = "AIPAS"
-$PlainPassword = ""
-$StorageAccountName = ""
+$PlainPassword = "[enter password for SPN]"
+$StorageAccountName = "[Configure here the name of the previously deployed Storage Account]"
+$SubscriptionId = "[enter subscriptionid]"" #SubscriptionId where the Vnets will be deployed. E.g. the Landing Zone Subscription. If multiple Subscriptions are used rerun for each Subscription
 
 #region Login to Azure
 Add-AzAccount
@@ -262,11 +267,11 @@ Set-AzContext -SubscriptionId $subscription.subscriptionId -TenantId $subscripti
 
 #region create SPN with Password
 $Password = ConvertTo-SecureString $PlainPassword  -AsPlainText -Force
-New-AzADApplication -DisplayName $ADApplicationName -HomePage "https://www.AIPAS.test" -IdentifierUris "https://www.AIPAS.test" -Password $Password -OutVariable app
+New-AzADApplication -DisplayName $ADApplicationName -HomePage "https://www.testAIPAS.test" -IdentifierUris "https://www.testAIPAS.test" -Password $Password -OutVariable app
 $Scope = Get-AzResourceGroup -Name $ResourceGroupName
 New-AzADServicePrincipal -ApplicationId $($app.ApplicationId) -Role $RoleDefinitionName -Scope $($Scope.ResourceId)
 # Add read permissions on all Subscriptions!!! For retrieving VNet information using the Resource Graph...
-New-AzRoleAssignment -RoleDefinitionName Reader -ServicePrincipalName $($app.ApplicationId.Guid) -Scope '/subscriptions/[landing Zone subscriptionid]'
+New-AzRoleAssignment -RoleDefinitionName Reader -ServicePrincipalName $($app.ApplicationId.Guid) -Scope ('/subscriptions/{0}' -f $SubscriptionId)
 
 Get-AzADApplication -DisplayNameStartWith $ADApplicationName -OutVariable app
 Get-AzADServicePrincipal -ServicePrincipalName $($app.ApplicationId.Guid) -OutVariable SPN
@@ -469,8 +474,10 @@ You need to update the following values in the deploy-azure-function yaml file.
 ```json
 env:
   AZURE_FUNCTIONAPP_NAME: "[enter the name for your Function App]"    # set this to your application's name
+  AZURE_FUNCTenv:
+  AZURE_FUNCTIONAPP_NAME: "[enter the name for your Function App]"    # set this to your application's name
   AZURE_FUNCTIONAPP_PACKAGE_PATH: "./src/function/"  # set this to the path to your web app project, defaults to the repository root
-  RESOURCEGROUPNAME: "[Enter a Resource Group Name]"    # Set this variable for the Resource Group Name where to store the Storage Account
+  RESOURCEGROUPNAME: "[Enter a Resource Group Name]"    # Set this variable for the Resource Group Name where to deploy the Azure Function. This needs to be the same RG as where the Storage Account was being deployed.
   SUBSCRIPTIONID: "[Enter a Subscription ID]"  # Set this variable to deploy the above Resource Group in a certain Subscription
   STORAGEACCOUNTNAME: "[Enter the name of Storage Account from the deploy-storage-account Github Action Workflow output]"
   REGION: "westeurope" # Set this variable to have the Resource Group and Storage Account deployed in a certain location

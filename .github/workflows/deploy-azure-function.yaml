@@ -5,7 +5,7 @@ name: Deploy-Azure-Function
 env:
   AZURE_FUNCTIONAPP_NAME: "[enter the name for your Function App]"    # set this to your application's name
   AZURE_FUNCTIONAPP_PACKAGE_PATH: "./src/function/"  # set this to the path to your web app project, defaults to the repository root
-  RESOURCEGROUPNAME: "[Enter a Resource Group Name]"    # Set this variable for the Resource Group Name where to store the Storage Account
+  RESOURCEGROUPNAME: "[Enter a Resource Group Name]"    # Set this variable for the Resource Group Name where to deploy the Azure Function. This needs to be the same RG as where the Storage Account was being deployed.
   SUBSCRIPTIONID: "[Enter a Subscription ID]"  # Set this variable to deploy the above Resource Group in a certain Subscription
   STORAGEACCOUNTNAME: "[Enter the name of Storage Account from the deploy-storage-account Github Action Workflow output]"
   REGION: "westeurope" # Set this variable to have the Resource Group and Storage Account deployed in a certain location
