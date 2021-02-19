@@ -15,7 +15,7 @@ Describe 'Passes Register-AddressSpace Function' {
             'StorageTableName'   = 'ipam'
             'TenantId'           = $env:AIPASTenantId
             'SubscriptionId'     = $env:AIPASSubscriptionId
-            'ResourceGroupName'  = 'AIPAS-rg'
+            'ResourceGroupName'  = $env:AIPASResourceGroupName
             'PartitionKey'       = 'IPAM'
             'ClientId'           = $env:AIPASClientId
             'ClientSecret'       = $env:AIPASClientSecret
