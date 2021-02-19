@@ -240,7 +240,7 @@ Use the following command to create the Service Principal and store Service Prin
 #>
 
 #region variables
-$ResourceGroupName = "AIPAS-rg" #used to scope the permissions for the SPN
+$ResourceGroupName = "AIPAS-rg" #used to scope the permissions for the SPN. This is where the Storage Account is being deployed.
 $RoleDefinitionName = "Storage Account Contributor"
 $ADApplicationName = "AIPAS"
 $PlainPassword = ""
@@ -440,19 +440,12 @@ Create a JSON file with the following information and store the output of last r
     "value": "[Storage Account Name from output of Storage Acount deployment]"
   },
   {
-    "name": "ResourceGroupName",
+    "name": "AIPASResourceGroupName",
     "value": "[Resource Group Name from output of Storage Acount deployment]"
-  },
-  {
-    "name": "StorageAccountTable",
-    "value": "ipam"
-  },
-  {
-    "name": "PartitionKey",
-    "value": "ipam"
   }
 ]
 ```
+
 Example APP_SETTINGS input
 
 ![APP_SETTINGS Secret screenshot](pictures/APP_SETTINGS_Secret.png)

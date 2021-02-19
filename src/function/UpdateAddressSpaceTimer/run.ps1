@@ -19,7 +19,7 @@ try {
         'StorageTableName'   = 'ipam'
         'TenantId'           = $env:AIPASTenantId
         'SubscriptionId'     = $env:AIPASSubscriptionId
-        'ResourceGroupName'  = 'AIPAS-rg'
+        'ResourceGroupName'  = $env:AIPASResourceGroupName
         'PartitionKey'       = 'ipam'
         'ClientId'           = $env:AIPASClientId
         'ClientSecret'       = $env:AIPASClientSecret
