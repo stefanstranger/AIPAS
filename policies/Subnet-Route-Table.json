@@ -5,11 +5,11 @@
         "input": {
             "value": {
                 "Name": "Subnet-Route-Table",
-                "ResourceId": "/providers/Microsoft.Management/managementGroups/fscp/providers/Microsoft.Authorization/policyDefinitions/Subnet-Route-Table",
+                "ResourceId": "/providers/Microsoft.Management/managementGroups/es/providers/Microsoft.Authorization/policyDefinitions/Subnet-Route-Table",
                 "ResourceName": "Subnet-Route-Table",
                 "ResourceType": "Microsoft.Authorization/policyDefinitions",
                 "SubscriptionId": null,
-                "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/fscp/providers/Microsoft.Authorization/policyDefinitions/Subnet-Route-Table",
+                "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/es/providers/Microsoft.Authorization/policyDefinitions/Subnet-Route-Table",
                 "Properties": {
                     "Description": "This Azure Policy appends a Route Table in accordance with the naming convention of the Subnet.",
                     "DisplayName": "Subnet-Route-Table",

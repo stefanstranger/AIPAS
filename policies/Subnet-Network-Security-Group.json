@@ -5,11 +5,11 @@
         "input": {
             "value": {
                 "Name": "Subnet-Network-Security-Group",
-                "ResourceId": "/providers/Microsoft.Management/managementGroups/fscp/providers/Microsoft.Authorization/policyDefinitions/Subnet-Network-Security-Group",
+                "ResourceId": "/providers/Microsoft.Management/managementGroups/es/providers/Microsoft.Authorization/policyDefinitions/Subnet-Network-Security-Group",
                 "ResourceName": "Subnet-Network-Security-Group",
                 "ResourceType": "Microsoft.Authorization/policyDefinitions",
                 "SubscriptionId": null,
-                "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/fscp/providers/Microsoft.Authorization/policyDefinitions/Subnet-Network-Security-Group",
+                "PolicyDefinitionId": "/providers/Microsoft.Management/managementGroups/es/providers/Microsoft.Authorization/policyDefinitions/Subnet-Network-Security-Group",
                 "Properties": {
                     "Description": "This Azure Policy appends a Network Security Group in accordance with the naming convention of the Subnet.",
                     "DisplayName": "Subnet-Network-Security-Group",
