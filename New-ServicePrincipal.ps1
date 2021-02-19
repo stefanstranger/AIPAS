@@ -81,16 +81,8 @@ Get-AzADServicePrincipal -ObjectId $($app.ApplicationId.Guid) -OutVariable SPN
         "value" = $StorageAccountName
     },
     [ordered]@{
-        "name" = "ResourceGroupName"
+        "name" = "AIPASResourceGroupName"
         "value" = $ResourceGroupName
-    },
-    [ordered]@{
-        "name" = "StorageAccountTable"
-        "value" = "ipam"
-    },
-    [ordered]@{
-        "name" = "PartitionKey"
-        "value" = "ipam"
     }
 ) | Convertto-json | clip
 #endregion
