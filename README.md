@@ -29,6 +29,7 @@ It was developed to be used to support the deployment of Enterprise Scale [Landi
     - [Storage Account Contributor permissions](#storage-account-contributor-permissions)
     - [Deploy Azure Function](#deploy-azure-function)
     - [Test Functions](#test-functions)
+  - [Virtual Network deployment](#virtual-network-deployment)
   - [TODO](#todo)
   - [Need Help?](#need-help)
   - [References](#references)
@@ -493,13 +494,62 @@ You can use the Azure Portal for testing your Azure Functions. If everything is 
 
 ![Testing AddAddressSpace Azure Function](pictures/AddAddressSpaceAzureFunction.png)
 
+## Virtual Network deployment
 
+The Azure Function RegisterAddressSpace can now be used when deploying a new Virtual Network as part of a Landing Zone deployment.
+
+Suppose you want to deploy the following Virtual Network as part of the new Landing Zone Subscription and Resource Group:
+
+| Azure Resource | Value |
+|----------|----------|
+| Subscription name | Landing Zone |
+| ResourceGroup name | myclaims-rg |
+| Virtual Network Name | MyClaims-vnet |
+
+The following PowerShell script could be used in your CICD Pipelines to register a VNet Address Space and deploy the VNet with this registered Address Space.
+
+```PowerShell
+# Create Resource Group and Vnet example PowerShell script
+
+#region variables
+$ResourceGroupName = 'myclaims-rg'
+$VNetName = 'MyClaims-vnet'
+$Location = 'westeurope'
+#endregion
+
+#region Call Registere Address Space REST API
+
+$uri = 'https://ipam.azurewebsites.net/api/RegisterAddressSpace?code=[yourcode]'
+$body = @{
+    'InputObject' = @{
+        'ResourceGroup' = $ResourceGroupName
+        'VirtualNetworkName' = $VNetName
+    }
+} | ConvertTo-Json
+
+$params = @{
+    'Uri'         = $uri
+    'Method'      = 'POST'
+    'ContentType' = 'application/json'
+    'Body'        = $Body
+}
+
+$Result = Invoke-RestMethod @params
+#endregion
+
+#region Create RG and Vnet
+New-AzResourceGroup -Name $ResourceGroupName -Location $Location
+
+New-AzVirtualNetwork -Name $VNetName -ResourceGroupName $ResourceGroupName -Location $Location -AddressPrefix $Result.NetworkAddress
+#endregion
+```
 
 
 
 ## TODO
 
 - Add authentication and authorization to the Azure Function
+- Add support for requesting an address space for a range of required host addresses
 
 ## Need Help?
 
