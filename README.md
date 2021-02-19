@@ -6,7 +6,7 @@ It was developed to be used to support the deployment of Enterprise Scale [Landi
 
 - [AIPAS](#aipas)
   - [Architectural Overview](#architectural-overview)
-  - [AIPAS REST API reference](#aipas-rest-api-reference)
+  - [Azure IP Address Solution (IAPAS) REST API reference](#azure-ip-address-solution-iapas-rest-api-reference)
     - [Add Address Space](#add-address-space)
       - [Examples](#examples)
     - [Register Address Space](#register-address-space)
@@ -38,9 +38,11 @@ It was developed to be used to support the deployment of Enterprise Scale [Landi
 
 ![Architectural Overview](pictures/ArchitecturalOverview.png)
 
-## AIPAS REST API reference
+## Azure IP Address Solution (IAPAS) REST API reference
 
 ### Add Address Space
+
+This REST API call can be used to add new IP address ranges to the existing Ip address ranges. As such, the platform (connectivity) team can use this REST API call to provide a representative picture of the available IP address ranges that can be used by DevOps teams. 
 
 | AddAddressSpace |
 |----------|
@@ -83,6 +85,8 @@ Address Space 10.0.0.0/16 already added
 
 ### Register Address Space
 
+This REST API call can be used by DevOps teams to claim a specific IP address range. Consequently, DevOps teams can register an IP address range themselves without the need for interaction with the platform (connectivity) team.
+
 | RegisterAddressSpace |
 |----------|
 | HTTPS |
@@ -123,7 +127,7 @@ Failed to register free address space
 
 ### Update Address Space
 
-The UpdateAddressSpace Azure Function is a timer function which is scheduled to run every day at 9:30 AM. If you want to change the schedule please change the [function.json](https://github.com/stefanstranger/AIPAS/blob/master/src/function/UpdateAddressSpaceTimer/function.json) schedule configuration.
+The UpdateAddressSpaceTimer Azure Function is a timer function which is scheduled to run every day at 9:30 AM. If you want to change the schedule please change the [function.json](https://github.com/stefanstranger/AIPAS/blob/master/src/function/UpdateAddressSpaceTimer/function.json) schedule configuration.
 
 ## Requirements
 
