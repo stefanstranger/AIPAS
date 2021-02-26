@@ -66,6 +66,8 @@ Request Body
   </td>
 </table>
 
+Content Type of the request: application/json
+
 Sample Response
 
 Status code: 200
@@ -108,6 +110,8 @@ Request Body
   <p>{<br />&nbsp;&nbsp; "InputObject": {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "ResourceGroup": "myclaims-rg",<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "VirtualNetworkName": "MyClaims-vnet"<br />&nbsp; }<br />}</p>
   </td>
 </table>
+
+Content Type of the request: application/json
 
 Sample Response
 
