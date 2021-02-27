@@ -15,12 +15,11 @@ Describe 'Passes Update-AddressSpace Function' {
             'StorageTableName' = 'ipam'
             'TenantId' = $env:AIPASTenantId
             'SubscriptionId' = $env:AIPASSubscriptionId
-            'ResourceGroupName' = 'AIPAS-rg'
+            'ResourceGroupName' = $env:AIPASResourceGroupName
             'PartitionKey' = 'IPAM'
             'ClientId' = $env:AIPASClientId
             'ClientSecret' = $env:AIPASClientSecret
         }
-        $Result = Update-AddressSpace @params 
-        $Result.Status | Should -Be 'OK'
+        {Update-AddressSpace @params} | Should -Not -Throw
     }
 }
