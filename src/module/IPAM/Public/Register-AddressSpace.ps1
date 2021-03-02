@@ -115,8 +115,6 @@ Function Register-AddressSpace {
                 }
 
                 Get-AddressSpace @params | Where-Object {$_.RowKey -eq $FreeAddressSpace.RowKey} | Select-Object -ExcludeProperty "odata*"
-                #return $FreeAddressSpace
-
             }
             else {
                 Throw
