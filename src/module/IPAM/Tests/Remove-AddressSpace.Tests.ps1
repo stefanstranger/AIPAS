@@ -23,7 +23,7 @@ Describe 'Passes Remove-AddressSpace Function' {
             }
             
             Get-AddressSpace @params |
-                Remove-AddressSpace -StorageAccountName $env:AIPASStorageAccountName -StorageTableName 'ipam' -TenantId $env:AIPASTenantId -SubscriptionId $env:AIPASSubscriptionId -ResourceGroupName 'AIPAS-rg' -PartitionKey 'ipam' -ClientId $env:AIPASClientId -ClientSecret $env:AIPASClientSecret
+                Remove-AddressSpace -StorageAccountName $env:AIPASStorageAccountName -StorageTableName 'ipam' -TenantId $env:AIPASTenantId -SubscriptionId $env:AIPASSubscriptionId -ResourceGroupName $env:AIPASResourceGroupName -PartitionKey 'ipam' -ClientId $env:AIPASClientId -ClientSecret $env:AIPASClientSecret
 
             Get-AddressSpace @params | Should -BeNullOrEmpty
             

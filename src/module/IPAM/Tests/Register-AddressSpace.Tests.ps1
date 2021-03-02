@@ -19,6 +19,7 @@ Describe 'Passes Register-AddressSpace Function' {
             'PartitionKey'       = 'IPAM'
             'ClientId'           = $env:AIPASClientId
             'ClientSecret'       = $env:AIPASClientSecret
+            'InputObject'        = @{ 'ResourceGroup' = 'myclaims-rg'; 'VirtualNetworkName' = 'MyClaims-vnet'} | ConvertTo-Json
         }
         Register-AddressSpace @params | Should -Not -BeNullOrEmpty
     } 
