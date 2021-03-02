@@ -118,7 +118,7 @@ Sample Response
 Status code: 200
 
 <table>
-<td><p>{&nbsp;<br />&nbsp; "odata.type": "jpupa3c3pvbnqstorage.ipam",&nbsp;<br />&nbsp; "odata.id": "https:// jpupa3c3pvbnqstorage.table.core.windows.net/ipam(PartitionKey='ipam',RowKey='4fb91aa3-ec73-49cc-a644-9d02ab7a82cf')",&nbsp;<br />&nbsp; "odata.etag": "W/\"datetime'2021-01-24T14%3A53%3A14.4436468Z'\"",&nbsp;<br />&nbsp; "odata.editLink": "ipam(PartitionKey='ipam',RowKey='4fb91aa3-ec73-49cc-a644-9d02ab7a82cf')",&nbsp;<br />&nbsp; "PartitionKey": "ipam",&nbsp;<br />&nbsp; "RowKey": "4fb91aa3-ec73-49cc-a644-9d02ab7a82cf",&nbsp;<br />&nbsp; "Timestamp@odata.type": "Edm.DateTime",&nbsp;<br />&nbsp; "Timestamp": "2021-01-24T14:53:14.4436468Z",&nbsp;<br />&nbsp; "Allocated": "False",&nbsp;<br />&nbsp; "CreatedDateTime": "2021-01-15T13:56:07.5253887+01:00",&nbsp;<br />&nbsp; "FirstAddress": "10.2.0.4",&nbsp;<br />&nbsp; "Hosts": 251.0,&nbsp;<br />&nbsp; "LastAddress": "10.2.0.254",&nbsp;<br />&nbsp; "LastModifiedDateTime": "2021-01-24T15:44:14.8422325+01:00",&nbsp;<br />&nbsp; "NetworkAddress": "10.2.0.0/24"&nbsp;<br />}&nbsp;</p>
+<td><p>{&nbsp;<br />&nbsp; "PartitionKey": "ipam",&nbsp;<br />&nbsp; "RowKey": "4fb91aa3-ec73-49cc-a644-9d02ab7a82cf",&nbsp;<br />&nbsp; "Timestamp@odata.type": "Edm.DateTime",&nbsp;<br />&nbsp; "Timestamp": "2021-01-24T14:53:14.4436468Z",&nbsp;<br />&nbsp; "Allocated": "True",&nbsp;<br />&nbsp; "CreatedDateTime": "2021-01-15T13:56:07.5253887+01:00",&nbsp;<br />&nbsp; "FirstAddress": "10.2.0.4",&nbsp;<br />&nbsp; "Hosts": 251.0,&nbsp;<br />&nbsp; "LastAddress": "10.2.0.254",&nbsp;<br />&nbsp; "LastModifiedDateTime": "2021-01-24T15:44:14.8422325+01:00",&nbsp;<br />&nbsp; "NetworkAddress": "10.2.0.0/24"&nbsp;<br />}&nbsp;</p>
 </td>
 </table>
 
