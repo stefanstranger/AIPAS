@@ -40,7 +40,7 @@ task Test {
     $Tests = @('ModuleValidation.Tests.ps1','Add-AddressSpace.Tests.ps1','Get-AddressSpace.Tests.ps1','Register-AddressSpace.Tests.ps1','Update-AddressSpace.Tests.ps1','Remove-AddressSpace.Tests.ps1')
     $Result = 0
     Foreach ($Test in $Tests) {
-        $TestResult = Invoke-Pester .\src\module\IPAM\Tests\$Test -PassThru
+        $TestResult = Invoke-Pester .\src\module\IPAM\Tests\$Test -PassThru -Output Detailed
         $Result = $Result + $TestResult.FailedCount 
     }
     if ($Result -gt 0) {
