@@ -31,6 +31,8 @@ Function Add-AddressSpace {
         [String[]]$NetworkAddress
     )
 
+    
+
     begin {
         # Get all address spaces stored in Storage Table
         Write-Verbose -Message ('Get all Address Spaces stored in Storage Table')
@@ -45,7 +47,7 @@ Function Add-AddressSpace {
             'ClientSecret'       = $ClientSecret
         }
         $AddressSpaces = Get-AddressSpace @params
-        
+       
         # Call helper functions Get-AccessToken and Get-SharedAccessKey
         Write-Verbose -Message ('Retrieving Access Token')
         $Token = Get-AccessToken -ClientId $ClientID -ClientSecret $ClientSecret -TenantId $TenantId
@@ -71,19 +73,35 @@ Function Add-AddressSpace {
 
     }
     process {
-        foreach ($Address in $NetworkAddress) {
+        foreach ($Address in $($NetworkAddress | ConvertFrom-Json)) {
             # Add new record
-            $Result = New-IPAMRecord -NetworkAddress $Address | ConvertTo-Json        
+            $Result = New-IPAMRecord -NetworkAddress $($Address.NetworkAddress) | ConvertTo-Json               
+            
   
-            if ($Address -notin $AddressSpaces.NetworkAddress) {
+            if ($($AddressSpaces.NetworkAddress) -notcontains $($Address.NetworkAddress)) {
                 Write-Verbose -Message ('Network Address {0} not in Storage Table {1}' -f $Address, $StorageTableName)
+                
+                <#
+                # Add extra properties if provided. E.g. SubscriptionName, Region
+                [System.Collections.ArrayList]$Properties = ($address | Get-Member -MemberType NoteProperty).Name
+                $Properties.Remove('NetworkAddress')
+
+                if ($Properties) {
+                    foreach ($Property in $Properties)
+                    {
+                        $Result | Add-Member -MemberType NoteProperty $Property -Value $($Address.$Property)
+                    }
+                    
+                }
+                $Result
+                #>                
 
                 $params = @{
                     'Uri'         = $uri
-                    'Headers'     = $Headers
+                    'Headers'     = $HeadersS
                     'Method'      = 'Post'
                     'ContentType' = 'application/json'
-                    'Body'        = $Result
+                    'Body'        = ($Result | ConvertTo-Json)
                 }
                 Invoke-RestMethod @params
             }
