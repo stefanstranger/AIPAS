@@ -167,7 +167,7 @@ $subscription = '<enter your Azure subscription Id>'
 Add-AzAccount
 #endregion
  
-Set-AzContext -SubscriptionId $subscription.subscriptionId -TenantId $subscription.TenantID
+Set-AzContext -SubscriptionId $subscription.subscriptionId
 #endregion
 
 #region Create a new Resource Group
@@ -211,19 +211,13 @@ $RoleDefinitionName = "Storage Account Contributor"
 $ADApplicationName = "AIPAS"
 $PlainPassword = "[enter password for SPN]"
 $StorageAccountName = "[Configure here the name of the previously deployed Storage Account]"
-$SubscriptionId = "[enter subscriptionid]"" #SubscriptionId where the Vnets will be deployed. E.g. the Landing Zone Subscription. If multiple Subscriptions are used rerun for each Subscription
+$SubscriptionId = "[enter subscriptionid]" #SubscriptionId where the Vnets will be deployed. E.g. the Landing Zone Subscription. If multiple Subscriptions are used rerun for each Subscription
 
 #region Login to Azure
 Add-AzAccount
 #endregion
  
 #region Select Azure Subscription
-$subscription = 
-(Get-AzSubscription |
-    Out-GridView `
-        -Title 'Select an Azure Subscription ...' `
-        -PassThru)
- 
 Set-AzContext -SubscriptionId $subscription.subscriptionId -TenantId $subscription.TenantID
 #endregion
 
