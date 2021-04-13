@@ -242,14 +242,25 @@ Get-AzADServicePrincipal -ServicePrincipalName $($app.ApplicationId.Guid) -OutVa
 } | Convertto-json
 #endregion
 
-#region create local environment variables
-[Environment]::SetEnvironmentVariable("AIPASClientId", "$($app.ApplicationId)", "User")
-[Environment]::SetEnvironmentVariable("AIPASClientSecret", "$PlainPassword", "User")
-[Environment]::SetEnvironmentVariable("AIPASSubscriptionId", "$($subscription.subscriptionId)", "User")
-[Environment]::SetEnvironmentVariable("AIPAStenantId", "$($subscription.TenantID)", "User")
-[Environment]::SetEnvironmentVariable("AIPASResourceGroupName", $ResourceGroupName, "User")
-[Environment]::SetEnvironmentVariable("AIPASStorageAccountName", $StorageAccountName, "User")
-# Restart VSCode to have access to the environment variables
+#region create local settings file
+$json = @"
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME_VERSION": "~7",
+    "FUNCTIONS_WORKER_RUNTIME": "powershell",
+    "AIPASStorageAccountName": "$StorageAccountName",
+    "AIPASTenantId": "$((Get-AzContext).Tenant.Id)",
+    "AIPASSubscriptionId": "$SubscriptionId",
+    "AIPASResourceGroupName": "$ResourceGroupName",
+    "AIPASClientId": "$($app.ApplicationId)",
+    "AIPASClientSecret": "$PlainPassword"
+  }
+}
+"@
+$json | Out-File -Path .vscode\local.settings.json
+# Restart VSCode to load the local settings
 #endregion
 ```
 
