@@ -23,7 +23,7 @@ choco install azure-functions-core-tools-3
 # Install PowerShell Core
 choco install pwsh
 # Install HttpMaster
-choco install postman
+choco install httpmaster-express
 ```
 
 ## MacOs
