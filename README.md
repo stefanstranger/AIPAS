@@ -218,7 +218,7 @@ Add-AzAccount
 #endregion
  
 #region Select Azure Subscription
-Set-AzContext -SubscriptionId $subscription.subscriptionId -TenantId $subscription.TenantID
+Set-AzContext -SubscriptionId $SubscriptionId
 #endregion
 
 #region create SPN with Password
