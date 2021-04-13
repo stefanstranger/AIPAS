@@ -40,7 +40,7 @@ brew tap caskroom/caskbrew cask install dotnet
 brew install azure-functions-core-tools@3
 # Install PowerShell 7
 brew install --cask powershell
-# Install Postman
+# Install Postman (alternative to httpmaster, which is only available for Windows)
 brew install --cask postman
 ```
 
