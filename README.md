@@ -143,54 +143,13 @@ Azure Subscription with:
 
 ## Local development
 
-If you want to further develop or test AIPAS you need to install the following prerequisites on your Windows development machine.
-
-### Install local development prerequisites
-
-- Git client
-- Visual Studio Code
-- Azure Function Core Tools (version 3.0.3160 or higher)
-- PowerShell (Core)
-- HTTP Testing and Debugging tool like [Httpmaster](https://www.httpmaster.net/) of [Insomnia](https://insomnia.rest/)
-
-If you installed [Chocolatey](https://chocolatey.org/) (a Windows Apt-Get kinda tool) you can install above software with the following commands:
-
-```PowerShell
-# Install Git
-choco install git
-# Install VSCode
-choco install vscode
-# Install Azure Function Core Tools
-choco install azure-functions-core-tools-3
-# Install PowerShell Core
-choco install pwsh
-# Install HttpMaster
-choco install httpmaster-express
-```
+AIPAS uses Azure Functions. You can develop, test and run Azure functions locally on your machine. Please see the [instructions](docs/prerequisites.md) for installing the prerequisites on Windows and MacOs.
 
 ### Clone AIPAS Repository
 
 ```PowerShell
 git clone https://github.com/stefanstranger/AIPAS.git
 ```
-
-### Install PowerShell Modules
-
-After cloning the Git Repository you can use the bootstrap.ps1 script to install the required PowerShell modules.
-
-![Bootstrap screenshot](pictures/bootstrap.png)
-
-The following PowerShell Modules need to be installed:
-
-- InvokeBuild
-- Pester
-- PlatyPS
-- Az PowerShell modules*
-
-\* The installation of the Az PowerShell modules are not part of the bootstrap.ps1 script. If you have not installed these PowerShell modules run Install-Module -Name Az on your development machine.
-
-
-
 ### Deploy Azure Storage Table
 
 Within the Git Repository there are Azure Resource Manager Template files that can be used to deploy a new Resource Group with an Azure Storage Table.
