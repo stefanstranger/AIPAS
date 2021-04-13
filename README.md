@@ -161,16 +161,11 @@ Run the following PowerShell Azure commands:
     Run from within your cloned repo folder
 #>
 
+$subscription = '<enter your Azure subscription Id>'
+
 #region Login to Azure
 Add-AzAccount
 #endregion
- 
-#region Select Azure Subscription
-$subscription = 
-(Get-AzSubscription |
-    Out-GridView `
-        -Title 'Select an Azure Subscription ...' `
-        -PassThru)
  
 Set-AzContext -SubscriptionId $subscription.subscriptionId -TenantId $subscription.TenantID
 #endregion
