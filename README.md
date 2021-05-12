@@ -30,6 +30,9 @@ It was developed to be used to support the deployment of Enterprise Scale [Landi
     - [Deploy Azure Function](#deploy-azure-function)
     - [Test Functions](#test-functions)
   - [Virtual Network deployment](#virtual-network-deployment)
+  - [Changes and Versioning](#changes-and-versioning)
+  - [Maintainers](#maitainers)
+  - [License](#license)
   - [TODO](#todo)
   - [Need Help?](#need-help)
   - [References](#references)
@@ -552,6 +555,19 @@ New-AzResourceGroup -Name $ResourceGroupName -Location $Location
 New-AzVirtualNetwork -Name $VNetName -ResourceGroupName $ResourceGroupName -Location $Location -AddressPrefix $Result.NetworkAddress
 #endregion
 ```
+## Changes and versioning
+
+Modules in this repository will use the [semantic versioning](http://semver.org/) model to declare breaking changes from v1.0.0.
+Prior to v1.0.0, breaking changes may be introduced in minor (0.x.0) version increments.
+For a list of module changes please see the [change log](CHANGELOG.md).
+
+## Maintainers
+
+- [Stefan Stranger](https://github.com/stefanstranger)
+
+## License
+
+This project is [licensed under the MIT License](LICENSE).
 
 ## TODO
 
