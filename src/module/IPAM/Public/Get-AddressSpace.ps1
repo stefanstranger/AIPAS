@@ -50,8 +50,18 @@ Function Get-AddressSpace {
         }
 
         # Return all Address Spaces from Storage Table
-        (Invoke-RestMethod @params).value
+        $addressSpaces = (Invoke-RestMethod @params -ResponseHeadersVariable responseHeaders).value
 
+        while ($responseHeaders.ContainsKey("x-ms-continuation-NextRowKey")) { 
+            $nextPartitionKey = $responseHeaders["x-ms-continuation-NextPartitionKey"][0]
+            $nextRowKey = $responseHeaders["x-ms-continuation-NextRowKey"][0]
+            $params."Uri" = ('https://{0}.table.core.windows.net/{1}?NextPartitionKey={2}&NextRowKey={3}' -f $StorageAccountName, $StorageTableName, $nextPartitionKey, $nextRowKey)
+            $additionalAddressSpaces = (Invoke-RestMethod @params -ResponseHeadersVariable responseHeaders).value
+         
+            $addressSpaces += $additionalAddressSpaces
+        }
+        
+        return $addressSpaces
     }
     catch {
 
