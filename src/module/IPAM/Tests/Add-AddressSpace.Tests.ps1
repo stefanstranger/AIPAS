@@ -7,6 +7,8 @@ BeforeAll {
         Remove-Module $ModuleName -Force
     }
     Import-Module $ManifestPath -Verbose:$false
+
+    $NetworkAddresses = Get-Content -Path "$PSScriptRoot\Example-AddAddressSpace-Input.json"
 }
 
 Describe 'Passes Add-AddressSpace Function' {
@@ -21,7 +23,7 @@ Describe 'Passes Add-AddressSpace Function' {
             'PartitionKey'       = 'IPAM'
             'ClientId'           = $env:AIPASClientId
             'ClientSecret'       = $env:AIPASClientSecret
-            'NetworkAddress'     = "10.0.0.0/16", "10.1.0.0/16"
+            'NetworkAddress'     = $NetworkAddresses #"10.0.0.0/16", "10.1.0.0/16"
         }
         $Result = Add-AddressSpace @params 
         $Result.Allocated | Should -Contain 'False'

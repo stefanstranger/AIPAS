@@ -1,0 +1,17 @@
+[
+    {
+        "NetworkAddress": "10.0.0.0/16",
+        "SubscriptionName": "Management",
+        "Location": "WestEurope"
+    },
+    {
+        "NetworkAddress": "10.1.0.0/16",
+        "SubscriptionName": "Landing Zone",
+        "Location": "NorthEurope"
+    },
+    {
+        "NetworkAddress": "10.2.0.0/24",
+        "SubscriptionName": "Landing Zone",
+        "Location": "WestEurope"
+    }
+]

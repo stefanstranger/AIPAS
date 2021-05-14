@@ -75,33 +75,23 @@ Function Add-AddressSpace {
     process {
         foreach ($Address in $($NetworkAddress | ConvertFrom-Json)) {
             # Add new record
-            $Result = New-IPAMRecord -NetworkAddress $($Address.NetworkAddress) | ConvertTo-Json               
-            
+            $Result = New-IPAMRecord -NetworkAddress $($Address.NetworkAddress) | ConvertTo-Json           
   
             if ($($AddressSpaces.NetworkAddress) -notcontains $($Address.NetworkAddress)) {
                 Write-Verbose -Message ('Network Address {0} not in Storage Table {1}' -f $Address, $StorageTableName)
                 
-                <#
-                # Add extra properties if provided. E.g. SubscriptionName, Region
-                [System.Collections.ArrayList]$Properties = ($address | Get-Member -MemberType NoteProperty).Name
-                $Properties.Remove('NetworkAddress')
-
-                if ($Properties) {
-                    foreach ($Property in $Properties)
-                    {
-                        $Result | Add-Member -MemberType NoteProperty $Property -Value $($Address.$Property)
-                    }
-                    
-                }
-                $Result
-                #>                
+                               
+                #Combine Result and Address Object into one new Object
+                $NewAddress = @{}
+                $Address.psobject.Properties | ForEach-Object {$NewAddress[$_.Name] = $_.Value}
+                ($Result | ConvertFrom-Json).psobject.Properties | ForEach-Object {$NewAddress[$_.Name] = $_.Value}
 
                 $params = @{
                     'Uri'         = $uri
-                    'Headers'     = $HeadersS
+                    'Headers'     = $Headers
                     'Method'      = 'Post'
                     'ContentType' = 'application/json'
-                    'Body'        = ($Result | ConvertTo-Json)
+                    'Body'        = ($NewAddress | ConvertTo-Json)
                 }
                 Invoke-RestMethod @params
             }
