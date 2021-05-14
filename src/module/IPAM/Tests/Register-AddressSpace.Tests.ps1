@@ -6,6 +6,8 @@ BeforeAll {
         Remove-Module $ModuleName -Force
     }
     Import-Module $ManifestPath -Verbose:$false
+
+    $InputObjectBody = Get-Content -Path "$PSScriptRoot\Example-RegisterAddressSpace-Input-Body.json"
 }
 
 Describe 'Passes Register-AddressSpace Function' {
@@ -19,7 +21,7 @@ Describe 'Passes Register-AddressSpace Function' {
             'PartitionKey'       = 'IPAM'
             'ClientId'           = $env:AIPASClientId
             'ClientSecret'       = $env:AIPASClientSecret
-            'InputObject'        = @{ 'ResourceGroup' = 'myclaims-rg'; 'VirtualNetworkName' = 'MyClaims-vnet'} | ConvertTo-Json
+            'InputObject'        = $InputObjectBody #@{ 'ResourceGroup' = 'myclaims-rg'; 'VirtualNetworkName' = 'MyClaims-vnet'} | ConvertTo-Json
         }
         Register-AddressSpace @params | Should -Not -BeNullOrEmpty
     } 

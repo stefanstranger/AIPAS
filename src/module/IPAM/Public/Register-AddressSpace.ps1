@@ -63,10 +63,25 @@ Function Register-AddressSpace {
     try {
         # Check if Address Space was not already registered
         $InputObject = $InputObject | ConvertFrom-Json
-        if (!(Get-AddressSpace @params | Where-Object { $_.ResourceGroup -eq $($inputObject.ResourceGroup) -and $_.VirtualNetworkName -eq $($inputObject.VirtualNetworkName) })) {
+        #Create filter
+        $FilterObject = @{}
+        $InputObject.psobject.Properties | ForEach-Object {$FilterObject[$_.Name] = $_.Value}
+        $Filter = Get-Filter ([PSCustomObject]$FilterObject)
+        
+        if (!(Get-AddressSpace @params | Where-Object $Filter)) {
             # Get free address space
+
+            #Create filter
+            $FilterObject = @{}
+            $InputObject.PSObject.Properties.Remove('ResourceGroup')
+            $InputObject.PSObject.Properties.Remove('VirtualNetworkName')
+            $InputObject.psobject.Properties | ForEach-Object {$FilterObject[$_.Name] = $_.Value}
+            ([PSCustomObject]@{'Allocated'='False'}).psobject.Properties | ForEach-Object {$FilterObject[$_.Name] = $_.Value}
+
+            $Filter = Get-Filter ([PSCustomObject]$FilterObject)
+            
             $FreeAddressSpace = Get-AddressSpace @params | 
-            Where-Object { $_.Allocated -eq 'False' } |                 
+            Where-Object $Filter |                 
             Sort-Object -Property 'CreatedDateTime' | Select-Object -First 1
 
             if ($FreeAddressSpace.count -eq 1) {
@@ -75,21 +90,14 @@ Function Register-AddressSpace {
                 $resource = "$StorageTableName(PartitionKey='$($FreeAddressSpace.PartitionKey)',RowKey='$($FreeAddressSpace.RowKey)')"
                 $uri = ('https://{0}.table.core.windows.net/{1}' -f $StorageAccountName, $resource)
                 $Headers = New-Header -Resource $Resource -StorageAccountName $StorageAccountName -StorageAccountKey $StorageAccountKey
-    
-                $Body = @{
-                    'PartitionKey'         = $FreeAddressSpace.RowKey
-                    'RowKey'               = $FreeAddressSpace.RowKey
-                    'CreatedDateTime'      = $FreeAddressSpace.CreatedDateTime
-                    'Allocated'            = "True"
-                    'VirtualNetworkName'   = $null
-                    'NetworkAddress'       = $FreeAddressSpace.NetworkAddress
-                    'FirstAddress'         = $FreeAddressSpace.FirstAddress
-                    'LastAddress'          = $FreeAddressSpace.LastAddress
-                    'Hosts'                = $FreeAddressSpace.Hosts
-                    'Subscription'         = $null
-                    'ResourceGroup'        = $null
-                    'LastModifiedDateTime' = $(Get-Date -f o)
-                } | ConvertTo-Json
+
+                $BodyObjectHashTable = @{}
+                $FreeAddressSpace.Allocated = 'True'
+                $FreeAddressSpace.psobject.Properties | ForEach-Object {$BodyObjectHashTable[$_.Name] = $_.Value}
+                $InputObject.psobject.Properties | ForEach-Object {$BodyObjectHashTable[$_.Name] = $_.Value}
+
+                #Convert Hashtable to Object to JSON
+                $Body = [PSCustomObject]$BodyObjectHashTable | ConvertTo-Json
 
                 Write-Verbose -Message ('{0}' -f $Body)
     
@@ -121,7 +129,7 @@ Function Register-AddressSpace {
             }
         }
         # Return already registered Address Space
-        Get-AddressSpace @params | Where-Object { $_.ResourceGroup -eq $($inputObject.ResourceGroup) -and $_.VirtualNetworkName -eq $($inputObject.VirtualNetworkName) } |
+        Get-AddressSpace @params | Where-Object $Filter |
             Select-Object -ExcludeProperty "odata*"
     }
     catch {

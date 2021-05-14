@@ -1,0 +1,5 @@
+{
+  "ResourceGroup": "myclaims-rg",
+  "VirtualNetworkName": "MyClaims-vnet",
+  "SubscriptionName": "Landing Zone"
+}
