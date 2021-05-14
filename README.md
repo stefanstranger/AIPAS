@@ -30,8 +30,8 @@ It was developed to be used to support the deployment of Enterprise Scale [Landi
     - [Deploy Azure Function](#deploy-azure-function)
     - [Test Functions](#test-functions)
   - [Virtual Network deployment](#virtual-network-deployment)
-  - [Changes and Versioning](#changes-and-versioning)
-  - [Maintainers](#maitainers)
+  - [Changes and versioning](#changes-and-versioning)
+  - [Maintainers](#maintainers)
   - [License](#license)
   - [TODO](#todo)
   - [Need Help?](#need-help)
@@ -557,9 +557,9 @@ New-AzVirtualNetwork -Name $VNetName -ResourceGroupName $ResourceGroupName -Loca
 ```
 ## Changes and versioning
 
-Modules in this repository will use the [semantic versioning](http://semver.org/) model to declare breaking changes from v1.0.0.
+Releases in this repository will use the [semantic versioning](http://semver.org/) model to declare breaking changes from v1.0.0.
 Prior to v1.0.0, breaking changes may be introduced in minor (0.x.0) version increments.
-For a list of module changes please see the [change log](CHANGELOG.md).
+For a list of release changes please see the [change log](CHANGELOG.md).
 
 ## Maintainers
 
