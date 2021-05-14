@@ -11,14 +11,8 @@ Write-Verbose ($TriggerMetadata | Convertto-Json) -Verbose
 
 Write-Verbose ('Request Object: {0}' -f ($request | convertto-json)) -Verbose
 
-# Interact with query parameters or the body of the request.
-$NetworkAddress = $Request.Query.NetworkAddress
-if (-not $NetworkAddress) {
-    $NetworkAddress = $Request.Body.NetworkAddress
-}
-
-if ($NetworkAddress) {
-    
+# Interact with the body of the request.
+if ($Request.Body) {  
     try {
         $params = @{
             'StorageAccountName' = $env:AIPASStorageAccountName
@@ -29,7 +23,7 @@ if ($NetworkAddress) {
             'PartitionKey'       = 'IPAM'
             'ClientId'           = $env:AIPASClientId
             'ClientSecret'       = $env:AIPASClientSecret
-            'NetworkAddress'     = $NetworkAddress
+            'NetworkAddress'     = $Request.Body | Convertto-Json
         }
 
         $Body = Add-AddressSpace @params -ErrorAction Stop
