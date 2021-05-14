@@ -8,7 +8,7 @@ BeforeAll {
     }
     Import-Module $ManifestPath -Verbose:$false
 
-    $NetworkAddresses = Get-Content -Path "$PSScriptRoot\Example-AddAddressSpace-Input.json"
+    $NetworkAddresses = Get-Content -Path "$PSScriptRoot\Example-AddAddressSpace-Input-Body.json"
 }
 
 Describe 'Passes Add-AddressSpace Function' {
