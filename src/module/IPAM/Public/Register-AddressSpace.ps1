@@ -128,9 +128,11 @@ Function Register-AddressSpace {
                 Throw
             }
         }
+        else {
         # Return already registered Address Space
         Get-AddressSpace @params | Where-Object $Filter |
             Select-Object -ExcludeProperty "odata*"
+        }
     }
     catch {
         Throw ('Failed to register free address space')
