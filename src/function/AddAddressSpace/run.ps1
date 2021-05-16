@@ -23,7 +23,7 @@ if ($Request.Body) {
             'PartitionKey'       = 'IPAM'
             'ClientId'           = $env:AIPASClientId
             'ClientSecret'       = $env:AIPASClientSecret
-            'NetworkAddress'     = $Request.Body | Convertto-Json
+            'NetworkAddress'     = $Request.Body | ConvertTo-Json
         }
 
         $Body = Add-AddressSpace @params -ErrorAction Stop
@@ -33,9 +33,12 @@ if ($Request.Body) {
     catch {
         $StatusCode = [HttpStatusCode]::BadRequest
         $Body = $_.Exception.Message
-    }
-
-    
+    }    
+}
+else {
+    #Create error because there is no body input
+    $StatusCode = [HttpStatusCode]::BadRequest
+    $Body = 'Missing Body of Request'
 }
 
 # Associate values to output bindings by calling 'Push-OutputBinding'.
