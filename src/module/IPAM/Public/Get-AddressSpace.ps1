@@ -68,7 +68,4 @@ Function Get-AddressSpace {
         Throw ('Error Message {0}' -f ($_ | ConvertFrom-Json).error)
         
     }
-
-
-
 }
