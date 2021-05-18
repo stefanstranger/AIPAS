@@ -136,15 +136,15 @@ Failed to register free address space
 
 The UpdateAddressSpaceTimer Azure Function is a timer function which is scheduled to run every day at 9:30 AM. If you want to change the schedule please change the [function.json](https://github.com/stefanstranger/AIPAS/blob/master/src/function/UpdateAddressSpaceTimer/function.json) schedule configuration.
 
-## Requirements
+## Azure Requirements
 
-Azure Subscription with:
+An Azure Subscription with at least contributer rights containing the following:
 
-- Resource Group
-- Azure Storage Account and Storage Table
-- Azure Function
+- a Resource Group
+- an Azure Storage Account and Storage Table
+- an Azure Function
 
-## Local development
+## Local development requirements
 
 If you want to further develop or test AIPAS you need to install the following prerequisites on your Windows development machine.
 
@@ -160,15 +160,15 @@ If you installed [Chocolatey](https://chocolatey.org/) (a Windows Apt-Get kinda 
 
 ```PowerShell
 # Install Git
-choco install git
+choco install git -fy
 # Install VSCode
-choco install vscode
+choco install vscode -fy
 # Install Azure Function Core Tools
-choco install azure-functions-core-tools-3
+choco install azure-functions-core-tools-3 -fy
 # Install PowerShell Core
-choco install pwsh
+choco install pwsh -fy
 # Install HttpMaster
-choco install httpmaster-express
+choco install httpmaster-express -fy
 ```
 
 ### Clone AIPAS Repository
@@ -177,7 +177,7 @@ choco install httpmaster-express
 git clone https://github.com/stefanstranger/AIPAS.git
 ```
 
-### Install PowerShell Modules
+### Install PowerShell Modules via included Bootstrap.ps1 script
 
 After cloning the Git Repository you can use the bootstrap.ps1 script to install the required PowerShell modules.
 
@@ -188,12 +188,14 @@ The following PowerShell Modules need to be installed:
 - InvokeBuild
 - Pester
 - PlatyPS
-- Az PowerShell modules*
 
-\* The installation of the Az PowerShell modules are not part of the bootstrap.ps1 script. If you have not installed these PowerShell modules run Install-Module -Name Az on your development machine.
+### Install Az PowerShell module
 
+The installation of the Az PowerShell modules are not part of the bootstrap.ps1 script. To install or upgrade the Az PowerShell module, run the follwing in a elevated permisions PowerShell session:
 
-
+```PowerShell
+Install-Module -Name Az -Force
+```
 ### Deploy Azure Storage Table
 
 Within the Git Repository there are Azure Resource Manager Template files that can be used to deploy a new Resource Group with an Azure Storage Table.
