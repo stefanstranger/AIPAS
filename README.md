@@ -146,54 +146,13 @@ Azure Subscription with:
 
 ## Local development
 
-If you want to further develop or test AIPAS you need to install the following prerequisites on your Windows development machine.
-
-### Install local development prerequisites
-
-- Git client
-- Visual Studio Code
-- Azure Function Core Tools (version 3.0.3160 or higher)
-- PowerShell (Core)
-- HTTP Testing and Debugging tool like [Httpmaster](https://www.httpmaster.net/) of [Insomnia](https://insomnia.rest/)
-
-If you installed [Chocolatey](https://chocolatey.org/) (a Windows Apt-Get kinda tool) you can install above software with the following commands:
-
-```PowerShell
-# Install Git
-choco install git
-# Install VSCode
-choco install vscode
-# Install Azure Function Core Tools
-choco install azure-functions-core-tools-3
-# Install PowerShell Core
-choco install pwsh
-# Install HttpMaster
-choco install httpmaster-express
-```
+AIPAS uses Azure Functions. You can develop, test and run Azure functions locally on your machine. Please see the [instructions](docs/prerequisites.md) for installing the prerequisites on Windows and MacOs.
 
 ### Clone AIPAS Repository
 
 ```PowerShell
 git clone https://github.com/stefanstranger/AIPAS.git
 ```
-
-### Install PowerShell Modules
-
-After cloning the Git Repository you can use the bootstrap.ps1 script to install the required PowerShell modules.
-
-![Bootstrap screenshot](pictures/bootstrap.png)
-
-The following PowerShell Modules need to be installed:
-
-- InvokeBuild
-- Pester
-- PlatyPS
-- Az PowerShell modules*
-
-\* The installation of the Az PowerShell modules are not part of the bootstrap.ps1 script. If you have not installed these PowerShell modules run Install-Module -Name Az on your development machine.
-
-
-
 ### Deploy Azure Storage Table
 
 Within the Git Repository there are Azure Resource Manager Template files that can be used to deploy a new Resource Group with an Azure Storage Table.
@@ -205,18 +164,13 @@ Run the following PowerShell Azure commands:
     Run from within your cloned repo folder
 #>
 
+$subscription = '<enter your Azure subscription Id>'
+
 #region Login to Azure
 Add-AzAccount
 #endregion
  
-#region Select Azure Subscription
-$subscription = 
-(Get-AzSubscription |
-    Out-GridView `
-        -Title 'Select an Azure Subscription ...' `
-        -PassThru)
- 
-Set-AzContext -SubscriptionId $subscription.subscriptionId -TenantId $subscription.TenantID
+Set-AzContext -SubscriptionId $subscription.subscriptionId
 #endregion
 
 #region Create a new Resource Group
@@ -260,20 +214,14 @@ $RoleDefinitionName = "Storage Account Contributor"
 $ADApplicationName = "AIPAS"
 $PlainPassword = "[enter password for SPN]"
 $StorageAccountName = "[Configure here the name of the previously deployed Storage Account]"
-$SubscriptionId = "[enter subscriptionid]"" #SubscriptionId where the Vnets will be deployed. E.g. the Landing Zone Subscription. If multiple Subscriptions are used rerun for each Subscription
+$SubscriptionId = "[enter subscriptionid]" #SubscriptionId where the Vnets will be deployed. E.g. the Landing Zone Subscription. If multiple Subscriptions are used rerun for each Subscription
 
 #region Login to Azure
 Add-AzAccount
 #endregion
  
 #region Select Azure Subscription
-$subscription = 
-(Get-AzSubscription |
-    Out-GridView `
-        -Title 'Select an Azure Subscription ...' `
-        -PassThru)
- 
-Set-AzContext -SubscriptionId $subscription.subscriptionId -TenantId $subscription.TenantID
+Set-AzContext -SubscriptionId $SubscriptionId
 #endregion
 
 #region create SPN with Password
@@ -297,14 +245,25 @@ Get-AzADServicePrincipal -ServicePrincipalName $($app.ApplicationId.Guid) -OutVa
 } | Convertto-json
 #endregion
 
-#region create local environment variables
-[Environment]::SetEnvironmentVariable("AIPASClientId", "$($app.ApplicationId)", "User")
-[Environment]::SetEnvironmentVariable("AIPASClientSecret", "$PlainPassword", "User")
-[Environment]::SetEnvironmentVariable("AIPASSubscriptionId", "$($subscription.subscriptionId)", "User")
-[Environment]::SetEnvironmentVariable("AIPAStenantId", "$($subscription.TenantID)", "User")
-[Environment]::SetEnvironmentVariable("AIPASResourceGroupName", $ResourceGroupName, "User")
-[Environment]::SetEnvironmentVariable("AIPASStorageAccountName", $StorageAccountName, "User")
-# Restart VSCode to have access to the environment variables
+#region create local settings file
+$json = @"
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "FUNCTIONS_WORKER_RUNTIME_VERSION": "~7",
+    "FUNCTIONS_WORKER_RUNTIME": "powershell",
+    "AIPASStorageAccountName": "$StorageAccountName",
+    "AIPASTenantId": "$((Get-AzContext).Tenant.Id)",
+    "AIPASSubscriptionId": "$SubscriptionId",
+    "AIPASResourceGroupName": "$ResourceGroupName",
+    "AIPASClientId": "$($app.ApplicationId)",
+    "AIPASClientSecret": "$PlainPassword"
+  }
+}
+"@
+$json | Out-File -Path .vscode\local.settings.json
+# Restart VSCode to load the local settings
 #endregion
 ```
 

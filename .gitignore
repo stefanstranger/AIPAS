@@ -3,3 +3,4 @@ __blobstorage*
 __azurite*
 __queuestorage*
 debug.ps1
+local.settings.json
