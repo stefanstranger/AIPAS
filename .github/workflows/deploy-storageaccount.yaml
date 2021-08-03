@@ -4,9 +4,9 @@
 name: Deploy-Storage-Account
 
 env:
-      RESOURCEGROUPNAME: "[Enter a Resource Group Name]"    # Set this variable for the Resource Group Name where to store the Storage Account
-      SUBSCRIPTIONID: "[Enter your subscriptionid]"  # Set this variable to deploy the above Resource Group in a certain Subscription
-      REGION: "westeurope" # Set this variable to have the Resource Group and Storage Account deployed in a certain location
+      RESOURCEGROUPNAME: "rg-ipam-01"    # Set this variable for the Resource Group Name where to store the Storage Account
+      SUBSCRIPTIONID: "ef620d24-2d5d-4e63-aaf9-e42cafb44dfb"  # Set this variable to deploy the above Resource Group in a certain Subscription
+      REGION: "uksouth" # Set this variable to have the Resource Group and Storage Account deployed in a certain location
 
 # Controls when the action will run. 
 on:
