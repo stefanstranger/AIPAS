@@ -3,12 +3,12 @@
 name: Deploy-Azure-Function
 
 env:
-  AZURE_FUNCTIONAPP_NAME: "fa-ipam-02"    # set this to your application's name
+  AZURE_FUNCTIONAPP_NAME: "fa-ipam-03"    # set this to your application's name
   AZURE_FUNCTIONAPP_PACKAGE_PATH: "./src/function/"  # set this to the path to your web app project, defaults to the repository root
   RESOURCEGROUPNAME: "AIPAS-rg"    # Set this variable for the Resource Group Name where to deploy the Azure Function. This needs to be the same RG as where the Storage Account was being deployed.
   SUBSCRIPTIONID: "ef620d24-2d5d-4e63-aaf9-e42cafb44dfb"  # Set this variable to deploy the above Resource Group in a certain Subscription
   STORAGEACCOUNTNAME: "vv3ammrgwxqcustorage"
-  REGION: "ukwest" # Set this variable to have the Resource Group and Storage Account deployed in a certain location
+  REGION: "uksouth" # Set this variable to have the Resource Group and Storage Account deployed in a certain location
 
 # Controls when the action will run. 
 on:
