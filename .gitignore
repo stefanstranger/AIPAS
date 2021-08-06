@@ -1,5 +1,0 @@
-# Ignore local storage emulator files
-__blobstorage*
-__azurite*
-__queuestorage*
-debug.ps1

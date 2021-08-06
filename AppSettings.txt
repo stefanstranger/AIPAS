@@ -1,0 +1,26 @@
+[
+  {
+    "name": "AIPASClientId",
+    "value": "d4ff5020-6115-4c84-b5a1-1e1b37104b58"
+  },
+  {
+    "name": "AIPASClientSecret",
+    "value": "TokyoOlympics2020!"
+  },
+  {
+    "name": "AIPASTenantId",
+    "value": "cef99625-c8ab-4a7b-baa2-3dd4811009be"
+  },
+  {
+    "name": "AIPASSubscriptionId",
+    "value": "ef620d24-2d5d-4e63-aaf9-e42cafb44dfb"
+  },
+  {
+    "name": "AIPASStorageAccountName",
+    "value": "evooh4mkwgjjastorage"
+  },
+  {
+    "name": "AIPASResourceGroupName",
+    "value": "rg-ipam-04"
+  }
+]
