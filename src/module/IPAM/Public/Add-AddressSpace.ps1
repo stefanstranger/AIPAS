@@ -88,7 +88,7 @@ Function Add-AddressSpace {
                 Invoke-RestMethod @params
             }
             else {
-                Write-Error -Message ('Address Space {0} already added' -f $Address)
+                Write-Error -Message ('Address Space {0} HAS ALREADY BEEN added' -f $Address)
             }
         }
     }
