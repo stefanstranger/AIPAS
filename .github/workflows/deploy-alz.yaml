@@ -11,7 +11,7 @@ env:
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ none ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -37,6 +37,16 @@ jobs:
           enable-AzPSSession: true
           environment: azurecloud
           allow-no-subscriptions: true
+          
+      - name: Azure PowerShell Action
+        uses: Azure/powershell@v1
+        with:
+          # Specify the Az PowerShell script here.
+          inlineScript: |
+            Get-AzResourceGroup
+          # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
+          azPSVersion: latest 
+          errorActionPreference: Stop
           
       # Runs a single command using the runners shell
       - name: Run a one-line script
