@@ -46,14 +46,13 @@ jobs:
           inlineScript: |
             $uri = 'https://fa-ipam-04.azurewebsites.net/api/RegisterAddressSpace?code=R9O27f/s1UzaSrQHDBbsuRs2LG9SKU9uW7J1YEaarX3iER4kxjWCCA=='
             $uri
-            New-AzResourceGroup -Name ${{ env.RESOURCEGROUPNAME }} -Location ${{ env.REGION }} -Force
-#            $body = @{
-#                  'InputObject' = @{
-#                        'ResourceGroup' = ${{ env.RESOURCEGROUPNAME }}
-#                        'VirtualNetworkName' = ${{ env.VNETNAME }}
-#                  }
-#            } | ConvertTo-Json
-#            $body
+            $body = @{
+                  'InputObject' = @{
+                        'ResourceGroup' = ${{ env.RESOURCEGROUPNAME }}
+                        'VirtualNetworkName' = ${{ env.VNETNAME }}
+                  }
+            } | ConvertTo-Json
+            $body
 #            $params = @{
 #                  'Uri'         = $uri
 #                  'Method'      = 'POST'
@@ -62,6 +61,7 @@ jobs:
 #            }
 #            $params
 #            $Result = Invoke-RestMethod @params
+#            New-AzResourceGroup -Name ${{ env.RESOURCEGROUPNAME }} -Location ${{ env.REGION }} -Force
 #            New-AzVirtualNetwork -Name ${{ env.VNETNAME }} -ResourceGroupName ${{ env.RESOURCEGROUPNAME }} -Location ${{ env.REGION }} -AddressPrefix $Result.NetworkAddress
           azPSVersion: latest 
           errorActionPreference: Stop
