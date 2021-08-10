@@ -3,10 +3,10 @@
 name: Deploy-ALZ
 
 env:
-      CGSUBID: 'cg01lzp001'
-      ENVID: 'dev'
-      REGIONID: 'uks'
-      REGIONNAME: 'uksouth' 
+      CGSUBID: "cg01lzp001"
+      ENVID: "dev"
+      REGIONID: "uks"
+      REGIONNAME: "uksouth" 
       
 # Controls when the workflow will run
 on:
