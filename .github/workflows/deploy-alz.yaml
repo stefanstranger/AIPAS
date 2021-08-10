@@ -3,7 +3,8 @@
 name: Deploy-ALZ
 
 env:
-      RESOURCEGROUPNAME: "rg-ipam-06"    
+      RESOURCEGROUPNAME: "rg-ipam-06"  
+      VNETNAME: "vnet-ipam-06"    
       SUBSCRIPTIONID: "ef620d24-2d5d-4e63-aaf9-e42cafb44dfb"  
       REGION: "uksouth" 
       
@@ -43,17 +44,22 @@ jobs:
         with:
           # Specify the Az PowerShell script here.
           inlineScript: |
-            Get-AzResourceGroup
-          # Azure PS version to be used to execute the script, example: 1.8.0, 2.8.0, 3.4.0. To use the latest version, specify "latest".
+            $uri = 'https://fa-ipam-04.azurewebsites.net/api/RegisterAddressSpace?code=R9O27f/s1UzaSrQHDBbsuRs2LG9SKU9uW7J1YEaarX3iER4kxjWCCA=='
+            $body = @{
+                  'InputObject' = @{
+                        'ResourceGroup' = ${{ env.RESOURCEGROUPNAME }}
+                        'VirtualNetworkName' = ${{ env.VNETNAME }}
+                  }
+            } | ConvertTo-Json
+            $params = @{
+                  'Uri'         = $uri
+                  'Method'      = 'POST'
+                  'ContentType' = 'application/json'
+                  'Body'        = $Body
+            }
+            $Result = Invoke-RestMethod @params
+            New-AzResourceGroup -Name ${{ env.RESOURCEGROUPNAME }} -Location ${{ env.REGION }} -Force
+            New-AzVirtualNetwork -Name ${{ env.VNETNAME }} -ResourceGroupName ${{ env.RESOURCEGROUPNAME }} -Location ${{ env.REGION }} -AddressPrefix $Result.NetworkAddress
           azPSVersion: latest 
           errorActionPreference: Stop
           
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, ALZ!
-
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
