@@ -60,9 +60,9 @@ jobs:
                   'Body'        = $Body
             }
             $params
-#            $Result = Invoke-RestMethod @params
-#            New-AzResourceGroup -Name ${{ env.RESOURCEGROUPNAME }} -Location ${{ env.REGION }} -Force
-#            New-AzVirtualNetwork -Name ${{ env.VNETNAME }} -ResourceGroupName ${{ env.RESOURCEGROUPNAME }} -Location ${{ env.REGION }} -AddressPrefix $Result.NetworkAddress
+            $Result = Invoke-RestMethod @params
+            New-AzResourceGroup -Name ${{ env.RESOURCEGROUPNAME }} -Location ${{ env.REGION }} -Force
+            New-AzVirtualNetwork -Name ${{ env.VNETNAME }} -ResourceGroupName ${{ env.RESOURCEGROUPNAME }} -Location ${{ env.REGION }} -AddressPrefix $Result.NetworkAddress
           azPSVersion: latest 
           errorActionPreference: Stop
           
