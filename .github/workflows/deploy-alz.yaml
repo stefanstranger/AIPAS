@@ -3,10 +3,10 @@
 name: Deploy-ALZ
 
 env:
-      RESOURCEGROUPNAME: 'rg-ipam-06'
-      VNETNAME: 'vnet-ipam-06'    
-      SUBSCRIPTIONID: "ef620d24-2d5d-4e63-aaf9-e42cafb44dfb"  
-      REGION: 'uksouth' 
+      CGSUBID: 'cg01lzp001'
+      ENVID: 'dev'
+      REGIONID: 'uks'
+      REGIONNAME: 'uksouth' 
       
 # Controls when the workflow will run
 on:
@@ -44,12 +44,17 @@ jobs:
         with:
           # Specify the Az PowerShell script here.
           inlineScript: |
+            $rgName = 'rg-'${{ env.CGSUBID }}'-'${{ env.REGIONID }}'-'${{ env.ENVID }}'-network'
+            $rgName
+            $vnetName = 'vnet-'${{ env.CGSUBID }}'-'${{ env.REGIONID }}'-'${{ env.ENVID }}'-01'
+            $vnetName
+            $regionName = ${{ env.REGIONNAME }} 
             $uri = 'https://fa-ipam-04.azurewebsites.net/api/RegisterAddressSpace?code=R9O27f/s1UzaSrQHDBbsuRs2LG9SKU9uW7J1YEaarX3iER4kxjWCCA=='
             $uri
             $body = @{
               'InputObject' = @{
-                'ResourceGroup' = "${{ env.RESOURCEGROUPNAME }}"
-                'VirtualNetworkName' = "${{ env.VNETNAME }}"
+                'ResourceGroup' = $rgName
+                'VirtualNetworkName' = $vnetName
               }
             } | ConvertTo-Json
             $body
@@ -61,8 +66,8 @@ jobs:
             }
             $params
             $Result = Invoke-RestMethod @params
-            New-AzResourceGroup -Name ${{ env.RESOURCEGROUPNAME }} -Location ${{ env.REGION }} -Force
-            New-AzVirtualNetwork -Name ${{ env.VNETNAME }} -ResourceGroupName ${{ env.RESOURCEGROUPNAME }} -Location ${{ env.REGION }} -AddressPrefix $Result.NetworkAddress
+            New-AzResourceGroup -Name $rgName -Location $regionName -Force
+            New-AzVirtualNetwork -Name $vnetName -ResourceGroupName $rgName -Location $regionName -AddressPrefix $Result.NetworkAddress
           azPSVersion: latest 
           errorActionPreference: Stop
           
