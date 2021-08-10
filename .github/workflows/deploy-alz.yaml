@@ -53,13 +53,13 @@ jobs:
               }
             } | ConvertTo-Json
             $body
-#            $params = @{
-#                  'Uri'         = $uri
-#                  'Method'      = 'POST'
-#                  'ContentType' = 'application/json'
-#                  'Body'        = $Body
-#            }
-#            $params
+            $params = @{
+                  'Uri'         = $uri
+                  'Method'      = 'POST'
+                  'ContentType' = 'application/json'
+                  'Body'        = $Body
+            }
+            $params
 #            $Result = Invoke-RestMethod @params
 #            New-AzResourceGroup -Name ${{ env.RESOURCEGROUPNAME }} -Location ${{ env.REGION }} -Force
 #            New-AzVirtualNetwork -Name ${{ env.VNETNAME }} -ResourceGroupName ${{ env.RESOURCEGROUPNAME }} -Location ${{ env.REGION }} -AddressPrefix $Result.NetworkAddress
