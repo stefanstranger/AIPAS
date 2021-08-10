@@ -47,10 +47,10 @@ jobs:
             $uri = 'https://fa-ipam-04.azurewebsites.net/api/RegisterAddressSpace?code=R9O27f/s1UzaSrQHDBbsuRs2LG9SKU9uW7J1YEaarX3iER4kxjWCCA=='
             $uri
             $body = @{
-                  'InputObject' = @{
-                        'ResourceGroup' = ${{ env.RESOURCEGROUPNAME }}
-                        'VirtualNetworkName' = ${{ env.VNETNAME }}
-                  }
+              'InputObject' = @{
+                'ResourceGroup' = ${{ env.RESOURCEGROUPNAME }}
+                'VirtualNetworkName' = ${{ env.VNETNAME }}
+              }
             } | ConvertTo-Json
             $body
 #            $params = @{
