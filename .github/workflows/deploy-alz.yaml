@@ -1,12 +1,17 @@
 # This is a basic workflow to help you get started with Actions
 
-name: deploy-alz
+name: Deploy-ALZ
 
+env:
+      RESOURCEGROUPNAME: "rg-ipam-06"    
+      SUBSCRIPTIONID: "ef620d24-2d5d-4e63-aaf9-e42cafb44dfb"  
+      REGION: "uksouth" 
+      
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [ none ]
   pull_request:
     branches: [ master ]
 
@@ -24,10 +29,18 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
+      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+          environment: azurecloud
+          allow-no-subscriptions: true
+          
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: echo Hello, world!
+        run: echo Hello, ALZ!
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
