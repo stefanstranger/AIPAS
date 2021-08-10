@@ -48,8 +48,8 @@ jobs:
             $uri
             $body = @{
               'InputObject' = @{
-                'ResourceGroup' = ${{ env.RESOURCEGROUPNAME }}
-                'VirtualNetworkName' = ${{ env.VNETNAME }}
+                'ResourceGroup' = "${{ env.RESOURCEGROUPNAME }}"
+                'VirtualNetworkName' = "${{ env.VNETNAME }}"
               }
             } | ConvertTo-Json
             $body
