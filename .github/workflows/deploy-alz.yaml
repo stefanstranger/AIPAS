@@ -39,12 +39,9 @@ jobs:
           # Specify the Az PowerShell script here.
           inlineScript: |
             $rgName = 'rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-${{ env.ENVID }}-network'
-            $rgName
-            $vnetName = 'vnet-'"${{ env.CGSUBID }}"'-'"${{ env.REGIONID }}"'-'"${{ env.ENVID }}"'-01'
-            $vnetName
+            $vnetName = 'vnet-${{ env.CGSUBID }}-${{ env.REGIONID }}-${{ env.ENVID }}-01'
             $regionName = "${{ env.REGIONNAME }}" 
             $uri = 'https://fa-ipam-04.azurewebsites.net/api/RegisterAddressSpace?code=R9O27f/s1UzaSrQHDBbsuRs2LG9SKU9uW7J1YEaarX3iER4kxjWCCA=='
-            $uri
             $body = @{
               'InputObject' = @{
                 'ResourceGroup' = $rgName
