@@ -38,7 +38,7 @@ jobs:
         with:
           # Specify the Az PowerShell script here.
           inlineScript: |
-            $rgName = 'rg-'${{ env.CGSUBID }}'-'${{ env.REGIONID }}'-'${{ env.ENVID }}'-network'
+            $rgName = 'rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-${{ env.ENVID }}-network'
             $rgName
             $vnetName = 'vnet-'"${{ env.CGSUBID }}"'-'"${{ env.REGIONID }}"'-'"${{ env.ENVID }}"'-01'
             $vnetName
