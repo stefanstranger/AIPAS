@@ -3,10 +3,10 @@
 name: Deploy-ALZ
 
 env:
-      RESOURCEGROUPNAME: "rg-ipam-06"  
-      VNETNAME: "vnet-ipam-06"    
+      RESOURCEGROUPNAME: 'rg-ipam-06'
+      VNETNAME: 'vnet-ipam-06'    
       SUBSCRIPTIONID: "ef620d24-2d5d-4e63-aaf9-e42cafb44dfb"  
-      REGION: "uksouth" 
+      REGION: 'uksouth' 
       
 # Controls when the workflow will run
 on:
