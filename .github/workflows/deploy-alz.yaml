@@ -65,7 +65,8 @@ jobs:
             }
             $Result = Invoke-RestMethod @params
             $networkAddress = $Result.NetworkAddress
-            echo "ADDRESSRANGE=$networkAddress" >> $GITHUB_ENV    
+            echo "ADDRESSRANGE=$networkAddress" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+#            echo "ADDRESSRANGE=$(networkAddress)" >> $GITHUB_ENV    
 #            New-AzResourceGroup -Name $rgName -Location $regionName -Force
 #            New-AzVirtualNetwork -Name $vnetName -ResourceGroupName $rgName -Location $regionName -AddressPrefix $Result.NetworkAddress
           azPSVersion: latest 
