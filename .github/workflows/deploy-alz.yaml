@@ -39,7 +39,7 @@ jobs:
           allow-no-subscriptions: true
           
       - name: Save variables
-        run: echo "RESGNAME='rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network'" >> $GITHUB_ENV          
+        run: echo "RESGNAME=rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network" >> $GITHUB_ENV          
           
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
