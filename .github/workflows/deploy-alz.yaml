@@ -25,7 +25,7 @@ on:
 
 jobs:
   Job-Build-ALZ:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -49,6 +49,7 @@ jobs:
         uses: Azure/powershell@v1
         with:
           inlineScript: |
+            choco install bicep
             $regionName = "${{ env.REGIONNAME }}" 
             $uri = 'https://fa-ipam-04.azurewebsites.net/api/RegisterAddressSpace?code=R9O27f/s1UzaSrQHDBbsuRs2LG9SKU9uW7J1YEaarX3iER4kxjWCCA=='
             $body = @{
