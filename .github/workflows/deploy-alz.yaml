@@ -1,6 +1,7 @@
 # ToDo
 #   Create RG with Bicep
 #   Create VNet with Bicep (accepting parameter of address space)
+#   Allowed regions / translation table e.g. uksouth - uks
 #   Store access key in vault
 #   Invoke workflow with different parameters
 
@@ -64,8 +65,8 @@ jobs:
                   'Body'        = $Body
             }
             $params
-#            $Result = Invoke-RestMethod @params
-#            echo "NWADDRESS=$Result.NetworkAddress" >> $GITHUB_ENV    
+            $Result = Invoke-RestMethod @params
+            echo "ADDRESSRANGE=$Result.NetworkAddress" >> $GITHUB_ENV    
 #            New-AzResourceGroup -Name $rgName -Location $regionName -Force
 #            New-AzVirtualNetwork -Name $vnetName -ResourceGroupName $rgName -Location $regionName -AddressPrefix $Result.NetworkAddress
           azPSVersion: latest 
@@ -91,7 +92,8 @@ jobs:
           #deploymentMode: Incremental
           parameters: 
             cgSubId=${{ env.CGSUBID }}
-            regionId=${{ env.REGIONID }}
+            regionId=${{ env.REGIONID ${{ env.REGIONNAME }}}}
             regionName=${{ env.REGIONNAME }}
+            addressRange=${{ env.ADDRESSRANGE }}
           # Specify whether to fail the action if some data is written to stderr stream of az cli. Valid values are: true, false
           #failOnStdErr: # optional, default is true
