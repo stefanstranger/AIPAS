@@ -40,8 +40,8 @@ jobs:
           allow-no-subscriptions: true
           
       - name: Save variables
-        run: echo RGNAME=rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network >> $GITHUB_ENV 
-             echo VNETNAME=vnet-${{ env.CGSUBID }}-${{ env.REGIONID }}-01 >> $GITHUB_ENV          
+        run: echo "RGNAME=rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network" >> $GITHUB_ENV 
+             echo "VNETNAME=vnet-${{ env.CGSUBID }}-${{ env.REGIONID }}-01" >> $GITHUB_ENV          
           
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
@@ -64,7 +64,7 @@ jobs:
             }
             $params
             $Result = Invoke-RestMethod @params
-            echo NWADDRESS=$Result.NetworkAddress >> $GITHUB_ENV    
+            echo "NWADDRESS=$Result.NetworkAddress" >> $GITHUB_ENV    
 #            New-AzResourceGroup -Name $rgName -Location $regionName -Force
 #            New-AzVirtualNetwork -Name $vnetName -ResourceGroupName $rgName -Location $regionName -AddressPrefix $Result.NetworkAddress
           azPSVersion: latest 
