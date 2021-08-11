@@ -63,7 +63,7 @@ jobs:
                   'ContentType' = 'application/json'
                   'Body'        = $Body
             }
-            New-AzDeployment -Location ${{ env.REGIONNAME }} -TemplateFile "./main.bicep" `
+            New-AzDeployment -Location ${{ env.REGIONNAME }} -TemplateFile ./main.bicep `
                   cgSubId ${{ env.CGSUBID }} `
                   regionId ${{ env.REGIONID }} `
                   regionName ${{ env.REGIONNAME }}
