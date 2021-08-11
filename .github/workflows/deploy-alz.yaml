@@ -83,6 +83,6 @@ jobs:
           template: ./main.bicep
           # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
           #deploymentMode: Incremental
-          #parameters: regionName = uksouth
+          parameters: regionName = uksouth
           # Specify whether to fail the action if some data is written to stderr stream of az cli. Valid values are: true, false
           #failOnStdErr: # optional, default is true
