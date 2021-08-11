@@ -90,7 +90,7 @@ jobs:
           # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
           #deploymentMode: Incremental
           parameters: 
-            cgSubName=${{ env.CGSUBNAME }}
+            cgSubId=${{ env.CGSUBID }}
             regionId=${{ env.REGIONID }}
             regionName=${{ env.REGIONNAME }}
           # Specify whether to fail the action if some data is written to stderr stream of az cli. Valid values are: true, false
