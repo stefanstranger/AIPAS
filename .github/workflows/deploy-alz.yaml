@@ -9,7 +9,6 @@ env:
       CGSUBID: "cg01lzp001"
       REGIONID: "uks"
       REGIONNAME: "uksouth" 
-      RESOURCEGROUPNAME: 'rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network'
       
 # Controls when the workflow will run
 on:
@@ -28,7 +27,8 @@ jobs:
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Check out repository
+        uses: actions/checkout@v2
       
       - name: Azure Login
         uses: azure/login@v1
@@ -37,6 +37,9 @@ jobs:
           enable-AzPSSession: true
           environment: azurecloud
           allow-no-subscriptions: true
+          
+      - name: Save variables
+        run: echo "RESGNAME='rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network'" >> $GITHUB_ENV          
           
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
@@ -85,7 +88,7 @@ jobs:
           # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
           #deploymentMode: Incremental
           parameters: 
-            cgSubName="${{ env.RESOURCEGROUPNAME }}" 
+            cgSubName="${{ env.RESGNAME }}" 
             regionName=${{ env.REGIONNAME }}
           # Specify whether to fail the action if some data is written to stderr stream of az cli. Valid values are: true, false
           #failOnStdErr: # optional, default is true
