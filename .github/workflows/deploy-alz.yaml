@@ -39,10 +39,10 @@ jobs:
           environment: azurecloud
           allow-no-subscriptions: true
           
-      - name: Save variables
-        run: |
-            echo "RGNAME=rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network" >> $GITHUB_ENV 
-            echo "VNETNAME=vnet-${{ env.CGSUBID }}-${{ env.REGIONID }}-01" >> $GITHUB_ENV          
+#      - name: Save variables
+#        run: |
+#            echo "RGNAME=rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network" >> $GITHUB_ENV 
+#            echo "VNETNAME=vnet-${{ env.CGSUBID }}-${{ env.REGIONID }}-01" >> $GITHUB_ENV          
           
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
@@ -52,8 +52,8 @@ jobs:
             $uri = 'https://fa-ipam-04.azurewebsites.net/api/RegisterAddressSpace?code=R9O27f/s1UzaSrQHDBbsuRs2LG9SKU9uW7J1YEaarX3iER4kxjWCCA=='
             $body = @{
               'InputObject' = @{
-                'ResourceGroup' = "${{ env.RGNAME }}"
-                'VirtualNetworkName' = "${{ env.VNETNAME }}"
+                'ResourceGroup' = "rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network"
+                'VirtualNetworkName' = "vnet-${{ env.CGSUBID }}-${{ env.REGIONID }}-01"
               }
             } | ConvertTo-Json
             $body
@@ -66,7 +66,7 @@ jobs:
             $params
             $Result = Invoke-RestMethod @params
             echo "NWADDRESS=$Result.NetworkAddress" >> $GITHUB_ENV    
-            echo "${{ env.NWADDRESS }}" 
+            Write-Host "${{ env.NWADDRESS }}" 
 #            New-AzResourceGroup -Name $rgName -Location $regionName -Force
 #            New-AzVirtualNetwork -Name $vnetName -ResourceGroupName $rgName -Location $regionName -AddressPrefix $Result.NetworkAddress
           azPSVersion: latest 
