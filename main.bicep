@@ -1,13 +1,6 @@
 param cgSubId string
 param regionId string
 
-@description('The name of the Azure region to deploy resources to.')
-@allowed([
-  'uksouth'
-  'ukwest'
-  'northeurope'
-  'westeurope'
-])
 param regionName string
 //param addressRange string
 
