@@ -65,7 +65,7 @@ jobs:
             }
             $Result = Invoke-RestMethod @params
             $networkAddress = $Result.NetworkAddress
-            New-AzSubscriptionDeployment -Location $regionName -TemplateFile ./main.bicep `
+            New-AzDeployment -Location $regionName -TemplateFile "./main.bicep" `
                   cgSubId ${{ env.CGSUBID }} `
                   regionId ${{ env.REGIONID }} `
                   regionName ${{ env.REGIONNAME }}
