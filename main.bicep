@@ -4,6 +4,6 @@ param regionName string
 
 targetScope = 'subscription'
 resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
-  name: 'rg-contoso'
+  name: 'rg-test-01'
   location: regionName
 }
