@@ -64,8 +64,9 @@ jobs:
                   'Body'        = $Body
             }
             $params
-#            $Result = Invoke-RestMethod @params
-#            echo "NWADDRESS=$Result.NetworkAddress" >> $GITHUB_ENV    
+            $Result = Invoke-RestMethod @params
+            echo "NWADDRESS=$Result.NetworkAddress" >> $GITHUB_ENV    
+            echo "${{ env.NWADDRESS }}" 
 #            New-AzResourceGroup -Name $rgName -Location $regionName -Force
 #            New-AzVirtualNetwork -Name $vnetName -ResourceGroupName $rgName -Location $regionName -AddressPrefix $Result.NetworkAddress
           azPSVersion: latest 
