@@ -1,9 +1,8 @@
-//param cgSubName string
-//param regionId string
-param regionName string
+param cgSubName string
+param regionId string
+//param regionName string
 
 targetScope = 'subscription'
 resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
-  name: 'rg-test-01'
-  location: regionName
+  name: cgSubName
 }
