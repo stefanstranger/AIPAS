@@ -9,9 +9,9 @@ param regionId string
   'westeurope'
 ])
 param regionName string
-param addressRange string
+//param addressRange string
 
-var rgNetworkName = 'rg-${cgSubId}-${regionId}--${addressRange}-network'
+var rgNetworkName = 'rg-${cgSubId}-${regionId}-network'
 //var rgIdentityName = 'rg-${cgSubId}-${regionId}-identity'
 //var rgSharedSvcsName = 'rg-${cgSubId}-${regionId}-sharedsvcs'
 //var rgManagementName = 'rg-${cgSubId}-${regionId}-management'
