@@ -57,16 +57,15 @@ jobs:
                 'VirtualNetworkName' = "vnet-${{ env.CGSUBID }}-${{ env.REGIONID }}-01"
               }
             } | ConvertTo-Json
-            $body
             $params = @{
                   'Uri'         = $uri
                   'Method'      = 'POST'
                   'ContentType' = 'application/json'
                   'Body'        = $Body
             }
-            $params
             $Result = Invoke-RestMethod @params
-            echo "ADDRESSRANGE=$Result.NetworkAddress" >> $GITHUB_ENV    
+            $networkAddress = $Result.NetworkAddress
+            echo "ADDRESSRANGE=$networkAddress" >> $GITHUB_ENV    
 #            New-AzResourceGroup -Name $rgName -Location $regionName -Force
 #            New-AzVirtualNetwork -Name $vnetName -ResourceGroupName $rgName -Location $regionName -AddressPrefix $Result.NetworkAddress
           azPSVersion: latest 
