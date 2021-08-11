@@ -2,6 +2,7 @@
 #   Create RG with Bicep
 #   Create VNet with Bicep (accepting parameter of address space)
 #   Store access key in vault
+#   Invoke workflow with different parameters
 
 name: Deploy-ALZ
 
@@ -39,20 +40,19 @@ jobs:
           allow-no-subscriptions: true
           
       - name: Save variables
-        run: echo "RESGNAME=rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network" >> $GITHUB_ENV          
+        run: echo RGNAME=rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network >> $GITHUB_ENV 
+             echo VNETNAME=vnet-${{ env.CGSUBID }}-${{ env.REGIONID }}-01 >> $GITHUB_ENV          
           
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
         with:
           inlineScript: |
-            $rgName = 'rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network'
-            $vnetName = 'vnet-${{ env.CGSUBID }}-${{ env.REGIONID }}-01'
             $regionName = "${{ env.REGIONNAME }}" 
             $uri = 'https://fa-ipam-04.azurewebsites.net/api/RegisterAddressSpace?code=R9O27f/s1UzaSrQHDBbsuRs2LG9SKU9uW7J1YEaarX3iER4kxjWCCA=='
             $body = @{
               'InputObject' = @{
-                'ResourceGroup' = $rgName
-                'VirtualNetworkName' = $vnetName
+                'ResourceGroup' = "${{ env.RGNAME }}"
+                'VirtualNetworkName' = "${{ env.VNETNAME }}"
               }
             } | ConvertTo-Json
             $body
@@ -63,7 +63,8 @@ jobs:
                   'Body'        = $Body
             }
             $params
-#            $Result = Invoke-RestMethod @params
+            $Result = Invoke-RestMethod @params
+            echo NWADDRESS=$Result.NetworkAddress >> $GITHUB_ENV    
 #            New-AzResourceGroup -Name $rgName -Location $regionName -Force
 #            New-AzVirtualNetwork -Name $vnetName -ResourceGroupName $rgName -Location $regionName -AddressPrefix $Result.NetworkAddress
           azPSVersion: latest 
@@ -88,7 +89,7 @@ jobs:
           # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
           #deploymentMode: Incremental
           parameters: 
-            cgSubName="${{ env.RESGNAME }}" 
+            cgSubName="${{ env.RGNAME }}" 
             regionName=${{ env.REGIONNAME }}
           # Specify whether to fail the action if some data is written to stderr stream of az cli. Valid values are: true, false
           #failOnStdErr: # optional, default is true
