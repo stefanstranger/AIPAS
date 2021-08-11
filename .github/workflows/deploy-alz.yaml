@@ -65,35 +65,35 @@ jobs:
             }
             $Result = Invoke-RestMethod @params
             $networkAddress = $Result.NetworkAddress
-            echo "ADDRESSRANGE=$networkAddress" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
-#            echo "ADDRESSRANGE=$(networkAddress)" >> $GITHUB_ENV    
-#            New-AzResourceGroup -Name $rgName -Location $regionName -Force
-#            New-AzVirtualNetwork -Name $vnetName -ResourceGroupName $rgName -Location $regionName -AddressPrefix $Result.NetworkAddress
+            New-AzSubscriptionDeployment -Location $regionName -TemplateFile ./main.bicep `
+                  cgSubId ${{ env.CGSUBID }} `
+                  regionId ${{ env.REGIONID }} `
+                  regionName ${{ env.REGIONNAME }}
           azPSVersion: latest 
           errorActionPreference: Stop
           
           
-      - name: Deploy Azure Resource Manager (ARM) Template
-        uses: Azure/arm-deploy@v1
-        with:
-          # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
-          scope: subscription
-          # Override the Subscription Id set by Azure Login.
-          #subscriptionId: # optional
-          # Specify the Id for the Management Group, only required for Management Group Deployments.
-          #managementGroupId: # optional
-          # Provide the target region, only required for management Group or Subscription deployments.
-          region: ${{ env.REGIONNAME }}
-          # Provide the name of a resource group, only required for resource Group deployments.
-          #resourceGroupName: 'rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network'
-          # Specify the path or URL to the Azure Resource Manager template.
-          template: ./main.bicep
-          # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
-          #deploymentMode: Incremental
-          parameters: 
-            cgSubId=${{ env.CGSUBID }}
-            regionId=${{ env.REGIONID }}
-            regionName=${{ env.REGIONNAME }}
-            addressRange=${{ env.ADDRESSRANGE }}
-          # Specify whether to fail the action if some data is written to stderr stream of az cli. Valid values are: true, false
-          #failOnStdErr: # optional, default is true
+#      - name: Deploy Azure REGIONNAMEe Manager (ARM) Template
+#        uses: Azure/arm-deploy@v1
+#        with:
+#          # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
+#          scope: subscription
+#          # Override the Subscription Id set by Azure Login.
+#          #subscriptionId: # optional
+#          # Specify the Id for the Management Group, only required for Management Group Deployments.
+#          #managementGroupId: # optional
+#          # Provide the target region, only required for management Group or Subscription deployments.
+#          region: ${{ env.REGIONNAME }}
+#          # Provide the name of a resource group, only required for resource Group deployments.
+#          #resourceGroupName: 'rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network'
+#          # Specify the path or URL to the Azure Resource Manager template.
+#          template: ./main.bicep
+#          # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
+#          #deploymentMode: Incremental
+#          parameters: 
+#            cgSubId=${{ env.CGSUBID }}
+#            regionId=${{ env.REGIONID }}
+#            regionName=${{ env.REGIONNAME }}
+#            addressRange=${{ env.ADDRESSRANGE }}
+#          # Specify whether to fail the action if some data is written to stderr stream of az cli. Valid values are: true, false
+#          #failOnStdErr: # optional, default is true
