@@ -8,7 +8,7 @@
 name: Deploy-ALZ
 
 env:
-      CGSUBID: "cg03lzp001"
+      CGSUBID: "cg04lzp001"
       REGIONID: "uks"
       REGIONNAME: "uksouth" 
       
@@ -55,14 +55,13 @@ jobs:
                   'ContentType' = 'application/json'
                   'Body'        = $Body
             }
+            $Result = Invoke-RestMethod @params
+            $networkAddress = $Result.NetworkAddress
             New-AzDeployment -Location ${{ env.REGIONNAME }} -TemplateFile ./main.bicep `
                   -cgSubId ${{ env.CGSUBID }} `
                   -regionId ${{ env.REGIONID }} `
                   -regionName ${{ env.REGIONNAME }} `
-                  -addressRange '10.8.0.0/16'
+                  -addressRange $networkAddress
           azPSVersion: latest 
           errorActionPreference: Stop
-#            $regionName = "${{ env.REGIONNAME }}" 
-#            $Result = Invoke-RestMethod @params
-#            $networkAddress = $Result.NetworkAddress
           
