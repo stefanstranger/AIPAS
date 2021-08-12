@@ -7,8 +7,8 @@
 name: Deploy-ALZ
 
 env:
-      CGSUBID: "cg05lzp001"
-      REGIONNAME: "uksouth" 
+      CGSUBID: "cg06lzp001"
+      REGIONNAME: "westeurope" 
       
 on:
   push:
