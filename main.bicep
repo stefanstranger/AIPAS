@@ -1,6 +1,7 @@
 param cgSubId string
 param regionId string
 param regionName string
+param addressRange string
 
 var rgNetworkName = 'rg-${cgSubId}-${regionId}-network'
 
@@ -14,6 +15,6 @@ module vnet './vnet.bicep' = {
   name: 'vnetDeployment'
   scope: rg
   params: {
-    addressRange: '10.7.0.0/16'
+    addressRange: addressRange
   }
 }
