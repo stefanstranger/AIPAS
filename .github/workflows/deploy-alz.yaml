@@ -8,7 +8,7 @@
 name: Deploy-ALZ
 
 env:
-      CGSUBID: "cg04lzp001"
+      CGSUBID: "cg05lzp001"
       REGIONID: "uks"
       REGIONNAME: "uksouth" 
       
