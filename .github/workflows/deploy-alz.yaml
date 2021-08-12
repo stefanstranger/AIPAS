@@ -1,14 +1,14 @@
 # ToDo
-#   Create RG with Bicep
 #   Create VNet with Bicep (accepting parameter of address space)
 #   Allowed regions / translation table e.g. uksouth - uks
 #   Store access key in vault
 #   Invoke workflow with different parameters
+#   Handle different target subscriptions
 
 name: Deploy-ALZ
 
 env:
-      CGSUBID: "cg01lzp001"
+      CGSUBID: "cg02lzp001"
       REGIONID: "uks"
       REGIONNAME: "uksouth" 
       
@@ -28,7 +28,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      # Check out repository under $GITHUB_WORKSPACE, so job can access it
       - name: Check out repository
         uses: actions/checkout@v2
       
@@ -36,20 +36,12 @@ jobs:
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-          enable-AzPSSession: true
-          environment: azurecloud
-          allow-no-subscriptions: true
-          
-#      - name: Save variables
-#        run: |
-#            echo "RGNAME=rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network" >> $GITHUB_ENV 
-#            echo "VNETNAME=vnet-${{ env.CGSUBID }}-${{ env.REGIONID }}-01" >> $GITHUB_ENV          
+          enable-AzPSSession: true     
           
       - name: Azure PowerShell Action
         uses: Azure/powershell@v1
         with:
           inlineScript: |
-            bicep --version
             $uri = 'https://fa-ipam-04.azurewebsites.net/api/RegisterAddressSpace?code=R9O27f/s1UzaSrQHDBbsuRs2LG9SKU9uW7J1YEaarX3iER4kxjWCCA=='
             $body = @{
               'InputObject' = @{
@@ -73,28 +65,3 @@ jobs:
 #            $Result = Invoke-RestMethod @params
 #            $networkAddress = $Result.NetworkAddress
           
-          
-#      - name: Deploy Azure REGIONNAMEe Manager (ARM) Template
-#        uses: Azure/arm-deploy@v1
-#        with:
-#          # Provide the scope of the deployment. Valid values are: 'resourcegroup', 'managementgroup', 'subscription'
-#          scope: subscription
-#          # Override the Subscription Id set by Azure Login.
-#          #subscriptionId: # optional
-#          # Specify the Id for the Management Group, only required for Management Group Deployments.
-#          #managementGroupId: # optional
-#          # Provide the target region, only required for management Group or Subscription deployments.
-#          region: ${{ env.REGIONNAME }}
-#          # Provide the name of a resource group, only required for resource Group deployments.
-#          #resourceGroupName: 'rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network'
-#          # Specify the path or URL to the Azure Resource Manager template.
-#          template: ./main.bicep
-#          # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group) or Validate (only validates the template).
-#          #deploymentMode: Incremental
-#          parameters: 
-#            cgSubId=${{ env.CGSUBID }}
-#            regionId=${{ env.REGIONID }}
-#            regionName=${{ env.REGIONNAME }}
-#            addressRange=${{ env.ADDRESSRANGE }}
-#          # Specify whether to fail the action if some data is written to stderr stream of az cli. Valid values are: true, false
-#          #failOnStdErr: # optional, default is true
