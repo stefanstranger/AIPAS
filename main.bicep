@@ -5,7 +5,7 @@ param regionName string
 var rgNetworkName = 'rg-${cgSubId}-${regionId}-network'
 
 targetScope = 'subscription'
-resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
+resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   name: rgNetworkName
   location: regionName
 }
