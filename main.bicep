@@ -14,6 +14,6 @@ module vnet './vnet.bicep' = {
   name: 'vnetDeployment'
   scope: rg
   params: {
-    addressRange: '10.0.0.0/16'
+    addressRange: '10.7.0.0/16'
   }
 }
