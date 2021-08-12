@@ -8,7 +8,7 @@
 name: Deploy-ALZ
 
 env:
-      CGSUBID: "cg02lzp001"
+      CGSUBID: "cg03lzp001"
       REGIONID: "uks"
       REGIONNAME: "uksouth" 
       
@@ -58,7 +58,8 @@ jobs:
             New-AzDeployment -Location ${{ env.REGIONNAME }} -TemplateFile ./main.bicep `
                   -cgSubId ${{ env.CGSUBID }} `
                   -regionId ${{ env.REGIONID }} `
-                  -regionName ${{ env.REGIONNAME }}
+                  -regionName ${{ env.REGIONNAME }} `
+                  -addressRange '10.8.0.0/16'
           azPSVersion: latest 
           errorActionPreference: Stop
 #            $regionName = "${{ env.REGIONNAME }}" 
