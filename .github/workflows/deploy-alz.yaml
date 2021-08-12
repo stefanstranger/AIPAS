@@ -1,5 +1,4 @@
 # ToDo
-#   Create VNet with Bicep (accepting parameter of address space)
 #   Allowed regions / translation table e.g. uksouth - uks
 #   Store access key in vault
 #   Invoke workflow with different parameters
@@ -9,30 +8,25 @@ name: Deploy-ALZ
 
 env:
       CGSUBID: "cg05lzp001"
-      REGIONID: "uks"
       REGIONNAME: "uksouth" 
       
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
     branches: [ none ]
   pull_request:
     branches: [ master ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+  workflow_dispatch:    # Allows you to run this workflow manually from the Actions tab
 
 jobs:
   Job-Build-ALZ:
     runs-on: windows-latest
 
-    steps:
-      # Check out repository under $GITHUB_WORKSPACE, so job can access it
-      - name: Check out repository
+    steps:             
+      - name: Check Out Repository              # Check out repository under $GITHUB_WORKSPACE, so job can access it
         uses: actions/checkout@v2
       
-      - name: Azure Login
+      - name: Azure Login                       # Log in to Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
@@ -45,8 +39,8 @@ jobs:
             $uri = 'https://fa-ipam-04.azurewebsites.net/api/RegisterAddressSpace?code=R9O27f/s1UzaSrQHDBbsuRs2LG9SKU9uW7J1YEaarX3iER4kxjWCCA=='
             $body = @{
               'InputObject' = @{
-                'ResourceGroup' = "rg-${{ env.CGSUBID }}-${{ env.REGIONID }}-network"
-                'VirtualNetworkName' = "vnet-${{ env.CGSUBID }}-${{ env.REGIONID }}-01"
+                'ResourceGroup' = "rg-${{ env.CGSUBID }}-${{ env.REGIONNAME }}-network"
+                'VirtualNetworkName' = "vnet-${{ env.CGSUBID }}-${{ env.REGIONNAME }}-01"
               }
             } | ConvertTo-Json
             $params = @{
@@ -59,7 +53,6 @@ jobs:
             $networkAddress = $Result.NetworkAddress
             New-AzDeployment -Location ${{ env.REGIONNAME }} -TemplateFile ./main.bicep `
                   -cgSubId ${{ env.CGSUBID }} `
-                  -regionId ${{ env.REGIONID }} `
                   -regionName ${{ env.REGIONNAME }} `
                   -addressRange $networkAddress
           azPSVersion: latest 
