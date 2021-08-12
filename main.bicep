@@ -15,3 +15,11 @@ resource rg 'Microsoft.Resources/resourceGroups@2021-01-01' = {
   name: rgNetworkName
   location: regionName
 }
+
+module vnet './vnet.bicep' = {
+  name: 'vnetDeployment'
+  scope: rg
+  params: {
+    addressRange: '10.0.0.0/16'
+  }
+}
