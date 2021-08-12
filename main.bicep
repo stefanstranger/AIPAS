@@ -1,10 +1,9 @@
 param cgSubId string
-param regionId string
 param regionName string
 param addressRange string
 
-var rgNetworkName = 'rg-${cgSubId}-${regionId}-network'
-var vnetName = 'vnet-${cgSubId}-${regionId}-01'
+var rgNetworkName = 'rg-${cgSubId}-${regionName}-network'
+var vnetName = 'vnet-${cgSubId}-${regionName}-01'
 
 targetScope = 'subscription'
 resource rg 'Microsoft.Resources/resourceGroups@2021-04-01' = {
