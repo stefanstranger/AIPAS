@@ -64,9 +64,9 @@ jobs:
                   'Body'        = $Body
             }
             New-AzDeployment -Location ${{ env.REGIONNAME }} -TemplateFile ./main.bicep `
-                  cgSubId ${{ env.CGSUBID }} `
-                  regionId ${{ env.REGIONID }} `
-                  regionName ${{ env.REGIONNAME }}
+                  -cgSubId ${{ env.CGSUBID }} `
+                  -regionId ${{ env.REGIONID }} `
+                  -regionName ${{ env.REGIONNAME }}
           azPSVersion: latest 
           errorActionPreference: Stop
 #            $regionName = "${{ env.REGIONNAME }}" 
