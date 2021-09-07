@@ -1,6 +1,6 @@
 # AIPAS
 
-AIPAS is IP Adddress Management Solution built in Azure to let (Network) Administrators keep up-to-date records of IP assignments and available addresses used to configure Azure Virtual Networks (VNets). 
+AIPAS is IP Address Management Solution built in Azure to let (Network) Administrators keep up-to-date records of IP assignments and available addresses used to configure Azure Virtual Networks (VNets). 
 
 It was developed to be used to support the deployment of Enterprise Scale [Landing Zones](https://stefanstranger.github.io/2020/10/16/EnterpriseScaleSubscriptionDemocratization/#what-is-a-landing-zone) and their accompanied Virtual Networks.
 
@@ -260,7 +260,7 @@ $RoleDefinitionName = "Storage Account Contributor"
 $ADApplicationName = "AIPAS"
 $PlainPassword = "[enter password for SPN]"
 $StorageAccountName = "[Configure here the name of the previously deployed Storage Account]"
-$SubscriptionId = "[enter subscriptionid]"" #SubscriptionId where the Vnets will be deployed. E.g. the Landing Zone Subscription. If multiple Subscriptions are used rerun for each Subscription
+$SubscriptionId = "[enter subscriptionid]" #SubscriptionId where the Vnets will be deployed. E.g. the Landing Zone Subscription. If multiple Subscriptions are used rerun for each Subscription
 
 #region Login to Azure
 Add-AzAccount
